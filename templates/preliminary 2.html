@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <title>Preliminary App</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #aedfff, #549eda);
+            animation: backgroundAnimation 10s infinite alternate-reverse;
+        }
+
+        .title-container {
+          
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .header-text{
+            font-family: 'Arial', sans-serif;
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+        .header-text:hover{
+            transform: skew(-10deg);
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .card {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 500px;
+            width: 40%;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        .card2 {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: auto;
+            width: 40%;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .excel-button {
+            background: linear-gradient(135deg, #1eff6b, #00a57c); 
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            max-height: 50px;
+            margin-top: 300px;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        h2{
+            background: linear-gradient(135deg, #00bfff, #0073e6); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+        }
+        .excel-button:hover {
+            background: linear-gradient(135deg, #16d469, #00895f); 
+        }
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .excel-table th,
+        .excel-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .excel-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 500px;
+            position:relative;
+            /* margin-right: 700px; */
+        }
+
+        .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 20px;
+        color: #000; 
+        z-index: 2; 
+    }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-container label {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-container button {
+            background: linear-gradient(135deg, #1eff6b, #00a57c);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .form-container button:hover {
+            background: linear-gradient(135deg, #16d469, #00895f);
+        }
+        /* .form-container label {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        } */
+
+        .form-container input[type="checkbox"] {
+            margin-left: 10px; 
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+        }
+
+        .form-container input[type="checkbox"]:checked {
+            background-color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+
+        .form-container input[type="checkbox"]:checked::before {
+            content: '\2713'; 
+            font-size: 16px;
+            color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .units-modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .units-modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 500px;
+            position: relative;
+            /* margin-right: 700px; */
+        }
+
+        .units-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        .areaSpaces-Modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .areaSpacesModal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 500px;
+            /* margin-right: 700px; */
+        }
+
+        .spaces-close-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+        }
+        .error-message{
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .typical-modal{
+
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="title-container">
+        <h1 class="header-text">Preliminary Calculations</h1>
+    </div>
+
+    <div class="card-container">
+        <div class="card">
+            <h2>Steps</h2>
+            <button class="excel-button" id="new-excel" onclick="openModal()">Create New Excel <i class="fa fa-table"
+                aria-hidden="true"></i></button>
+            <button class="excel-button">Use an Existing Excel <i class="fa fa-table" aria-hidden="true"></i></button>
+
+
+            <!-- The initial step -->
+            <div id="myModal" class="modal open-modal">
+                <div class="modal-content">
+                  
+                    <div class="form-container">
+                        <span class="close-btn" onclick="closeModal()">&times;</span>
+                        <label for="project_name">Project Name</label>
+                        <input type="text" id="project_name" name="project_name" placeholder="Enter your project name">
+
+                        <label for="total_floors">Total Floors</label>
+                        <input type="text" id="total_floors" name="total_floors" placeholder="Enter total floors">
+
+                        <label for="maximum_gfa">Maximum GFA</label>
+                        <input type="text" id="maximum_gfa" name="maximum_gfa" placeholder="Enter maximum GFA">
+
+                        <button onclick="nextStep()">Next</button>
+                    </div>
+                </div>
+               
+            </div>
+
+            <!-- THE MAIN MODAL -->
+
+            <div id="nextModal" class="modal open-modal">
+                <div class="modal-content">
+                  
+                    <h2>Next Step</h2>
+                  
+                    <div class="form-container">
+                        <span class="close-btn" onclick="closeNextModal()">&times;</span>
+
+                        <label for="floor_list">Select Floor</label>
+
+                        <select id="floor_list" name="floor_list"></select>
+
+                        <button onclick="editFloorList()">Edit Floor List</button>
+
+                        <div id="editFloorContainer" style="display: none;">
+                            <label for="edit_total_floors">Edit Total Floors</label>
+                            <input type="text" id="edit_total_floors" name="edit_total_floors">
+                            <button onclick="updateFloorList()">Update</button>
+                        </div>
+
+                        <div >
+
+                            <div style="display: flex; margin-top: 10px;">
+                                <input type="checkbox" id="no_of_units" name="no_of_units" onchange="showUnitsModal()">
+                                <label for="no_of_units">Enter the Number of Units</label>
+
+                            </div>
+
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="area_of_spaces" name="area_of_spaces" onchange="showAreaofSpaces()">
+
+                                <label for="area_of_spaces">Enter the Area of Spaces</label>
+
+                            </div>
+
+                            <!-- edit the typicals -->
+
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="edit_typical" name="edit_typical" onchange="showTypicalModal()">
+
+                                <label for="edit_typical">Edit Typical Values</label>
+                            </div>
+                            
+
+                            <!-- Remove the typicals -->
+
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="remove_typical" name="remove_typical">
+
+                                <label for="remove_typical">Remove Typical Values</label>
+                            </div>
+
+                        </div>
+
+
+                        <button id="previousButton" onclick="goToPreviousStep2();">Previous</button>
+
+                        <button onclick="finalStep()">Next</button>
+                   
+                    </div>
+                </div>
+            </div>
+
+            <!-- THE UNITS MODAL -->
+
+            <div id="unitsModal" class="units-modal open-modal">
+
+                <div class="units-modal-content">
+
+                    <span class="units-close-btn" onclick="closeUnitsModal()">&times;</span>
+                    <h2 id="unitsModalHeading">Enter the Number of Units for 1 Bedroom</h2>
+
+
+                    <div class="form-container">
+        
+                        <select id="unitType" name="unitType">
+
+                            <option value="1br">1 BR</option>
+                            <option value="2br">2 BR</option>
+                            <option value="3br">3 BR</option>
+                            <option value="studio">Studio</option>
+                            <option value="retail">Retail</option>
+                            <option value="office">Office</option>
+
+                        </select>
+        
+                        <label for="no_of_units_by_floor" id="no_of_units_label">Enter the Number of Units:</label>
+
+                        <input type="text" id="no_of_units_by_floor" name="no_of_units_by_floor">
+        
+                        <label for="area_of_units_range_by_floor" id="area_range_label">Enter the area for units in the range from 0-120:</label>
+
+                        <input type="text" id="area_of_units_range_by_floor" name="area_of_units_range_by_floor">
+                        <div id="areaRangeError" class="error-message"></div>
+
+
+
+                        <!-- THE BUTTONS FOR UNITS MODAL -->
+
+                        <button onclick="goToPreviousStep()">Previous</button>
+
+                        <button onclick="submitUnits()">Submit</button>
+                        
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TYPICAL MODALS -->
+
+            <div id="typicalModal" class="modal" draggable="true">
+
+                <div class="modal-content">
+
+                    <span class="close-btn" onclick="closetypicalModal()">&times;</span>
+
+                    <h2>Next Step edit typicals</h2>
+
+                    <div class="form-container">
+
+                        <label for="enter_typical_unit">Enter typical unit</label>
+
+                        <input type='text' id="enter_typical_unit" name="enter_typical_unit" placeholder="" value=""></input>
+
+
+                        <label for="floor_range">Enter Floor range</label>
+
+                        <input id="floor_range" name="floor_range"></input>
+
+
+                        <label for="induvidual_floors">Enter induvidual floors</label>
+
+                        <input id="induvidual_floors" name="induvidual_floors"></input>
+
+
+                        <!-- CREATING CHECKBOXES -->
+                        <div >
+
+                            <!-- CHECK TO INCLUDE MORE FLOORS -->
+
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="include_more_floors" name="include_more_floors">
+
+                                <label for="include_more_floors">Check Include include_more_floors</label>
+
+                                
+
+                            </div>
+
+                            <!-- CHECK TO REMOVE FLOORS -->
+
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="remove_floors" name="remove_floors">
+
+
+                                <label for="remove_floors">Check to remove floors</label>
+                                
+                                
+                            </div>
+
+                               
+                                
+                            </div>
+                            <!-- CHECK TO SWITCH TYPICALS-->
+
+                            <div style="display: flex; margin-top: 10px;">
+
+
+                                <input type="checkbox" id="switch_typicals" name="switch_typicals">
+
+                                <label for="switch_typicals">Check to Switch from one typical to another</label>                           
+                                                              
+                            </div>
+
+                            <!-- CHECK TO EXIT -->
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="final" name="final">
+
+
+                                <label for="final">Check to be Final Value</label> 
+                                                             
+                            </div>
+
+                            <!-- CLICKING THE BUTTON TO GO TO NEXT STEP -->
+
+                            <div>
+
+
+                                <!-- THE BUTTON FOR TYPICAL MODAL -->
+
+                                <button id="previousButton" onclick="goTypicalToMainModal();">Previous</button>
+
+                                <button id="select"  onclick="execute_typical()">Select</button>
+
+                            </div>
+
+                        </div>
+    
+                    </div>
+
+                </div>
+
+            </div>
+        
+        
+      
+        </div>
+
+        <div class="card2">
+            <h2 id="dynamicTitle">Dynamic Excel View</h2>
+
+            <table class="excel-table" id="excelTable">
+
+                <thead>
+                    <tr>
+                        <th>SrNo</th>
+                        <th>Office_area</th>
+                        <th>Retail_area</th>
+                        <th>Studio_area</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                  
+                </tbody>
+
+            </table>
+
+            <button class="excel-button" id="downloadExcelBtn">Download Excel</button>
+
+        </div>
+      
+
+    </div>
+
+
+     <!-- Modal -->
+     <!-- <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Create New Excel</h2>
+            
+        </div>
+    </div> -->
+
+    <script>
+
+        currentStep = 1;
+        floorData = [];
+       // Retrieve the stored table HTML from localStorage
+
+        // var tableHTML = localStorage.getItem('storedTableHTML') || '';
+
+        // console.log('Retrieved stored table HTML:', tableHTML);
+        
+
+        function openModal() {
+
+
+            //  CLEARING THE CACHE OF THE UPDATED TABLES
+
+            localStorage.clear('storedUpdateTableHTML')
+
+            document.getElementById('myModal').style.display = 'flex';
+
+            // console.log(localStorage.getItem('storedUpdateTableHTML'))
+
+            
+            
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+            document.getElementById('')
+        }
+
+        function nextStep() {
+
+            
+
+
+            currentStep++;
+
+            var projectName = document.getElementById('project_name').value;
+
+            var totalFloors = parseInt(document.getElementById('total_floors').value);
+
+            document.getElementById('dynamicTitle').innerText = `Dynamic Excel View for ${projectName}`;
+
+            closeModal();
+
+            document.getElementById('nextModal').style.display = 'flex';
+
+            var floorListDropdown = document.getElementById('floor_list');
+
+            floorListDropdown.innerHTML = "";
+
+    
+
+            // we store the original calculation when the value is null
+
+            if (localStorage.getItem('storedUpdateTableHTML') == null) {
+
+                console.log('ewewee')
+                  
+                excelTable.innerHTML = "<tr><th>SrNo</th><th>Office_area</th><th>Retail_area</th><th>Studio_area</th></tr>";
+
+                for (var i = 1; i <= totalFloors; i++) {
+
+
+                    var option = document.createElement("option");
+                    option.value = i;
+
+                    option.text = "Floor " + i;
+                    floorListDropdown.appendChild(option);
+
+                    var newRow = excelTable.insertRow(-1);
+                    var srNoCell = newRow.insertCell(0);
+                    srNoCell.innerHTML = "Floor " + i;
+
+                    
+                    for (var j = 1; j <= 3; j++) {
+                        var cell = newRow.insertCell(j);
+                        cell.innerHTML = "Data " + (i * 3 + j);
+                    }
+
+
+                }
+
+                localStorage.setItem('storedTableHTML', excelTable.innerHTML);
+            
+            }
+            
+            //  We bring in the new updates after this
+
+            else{
+
+                for (var i = 1; i <= totalFloors; i++) {
+
+                    var option = document.createElement("option");
+                    option.value = i;
+
+                    option.text = "Floor " + i;
+                    floorListDropdown.appendChild(option);
+                
+                }
+
+                excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML')
+
+                console.log(excelTable)
+
+            }
+        }
+
+            
+        
+
+
+        function closeNextModal() {
+        var nextModal = document.getElementById('nextModal');
+        if (!nextModal.getAttribute('draggable')) {
+            nextModal.style.display = 'none';
+        }
+    }
+
+
+        function closeNextModal() {
+            document.getElementById('nextModal').style.display = 'none';
+        }
+        window.onclick = function (event) {
+        var modal = document.getElementById('myModal');
+        var nextModal = document.getElementById('nextModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+        if (event.target == nextModal) {
+            nextModal.style.display = 'none';
+        }
+    };
+    function editFloorList() {
+            var totalFloorsInput = document.getElementById('edit_total_floors');
+            var editFloorContainer = document.getElementById('editFloorContainer');
+
+            editFloorContainer.style.display = editFloorContainer.style.display === 'none' ? 'block' : 'none';
+            if (editFloorContainer.style.display === 'block') {
+                var totalFloors = parseInt(document.getElementById('total_floors').value);
+                totalFloorsInput.value = totalFloors;
+            }
+        }
+
+        function updateFloorList() {
+
+            var totalFloorsInput = document.getElementById('edit_total_floors');
+            var totalFloors = parseInt(totalFloorsInput.value);
+            console.log('this is totalFloors',totalFloors,'this is total floorsInput',totalFloorsInput)
+            document.getElementById('total_floors').value = totalFloors;
+
+            var floorListDropdown = document.getElementById('floor_list');
+
+            floorListDropdown.innerHTML = "";
+
+            for (var i = 1; i <= totalFloors; i++) {
+                var option = document.createElement("option");
+                option.value = i;
+                option.text = "Floor " + i;
+                floorListDropdown.appendChild(option);
+            }
+
+            updateExcelAndView(); 
+            document.getElementById('editFloorContainer').style.display = 'none';
+    }
+
+
+        function updateTableRows(totalFloors) {
+
+
+            console.log("this executed function updateTableRows")
+
+            var tableBody = document.getElementById('tableBody');
+
+            // tableBody.innerHTML = "";
+
+            console.log(tableBody)
+
+            floorData = []; 
+
+            for (var i = 1; i <= totalFloors; i++) {
+                
+                var row = tableBody.insertRow();
+                var cellSrNo = row.insertCell(0);
+                var cellOfficeArea = row.insertCell(1);
+                var cellRetailArea = row.insertCell(2);
+                var cellStudioArea = row.insertCell(3);
+
+                cellSrNo.innerHTML = "Floor " + i;
+                cellOfficeArea.innerHTML = "Data " + (i * 3 - 2);
+                cellRetailArea.innerHTML = "Data " + (i * 3 - 1);
+                cellStudioArea.innerHTML = "Data " + (i * 3);
+
+            
+                floorData.push({
+                    floor: i,
+                    office_area: "Data " + (i * 3 - 2),
+                    retail_area: "Data " + (i * 3 - 1),
+                    studio_area: "Data " + (i * 3)
+                });
+
+                // STORING THE TABLE DATA
+            }
+
+            // localStorage.setItem('storedTableHTML', tableBody.innerHTML);
+
+            // console.log(localStorage)
+
+        }
+
+        //  UPDATE THE TYPICAL TABLE ROWS THIS COMES UNDER TYPICAL MODAL
+
+        function updateTableRowsTypicals(lower_range,higher_range,typical,excelTable){
+
+
+            // excelTable.innerHTML = localStorage.getItem('storedTableHTML');
+
+            console.log(typical)
+
+            // To select the row of the dataframe
+            var tableRows = excelTable.rows;
+
+            for (var i = 0; i < tableRows.length; i++){
+
+
+                // Accessing the particular row and column
+                var currentSrNo = tableRows[i].cells[0].textContent.trim();
+
+                // checking if the current value accessed is the typical value
+
+                if (currentSrNo == typical){
+
+                    row_selected = tableRows[i]
+                }
+            }
+            // updating the values specified in the ranges given
+
+            for (var i = lower_range; i <= higher_range; i++) {
+                
+                excelTable.rows[i].cells[1].textContent  = row_selected.cells[1].textContent;
+                excelTable.rows[i].cells[2].textContent  = row_selected.cells[2].textContent;
+                excelTable.rows[i].cells[3].textContent  = row_selected.cells[3].textContent; 
+               
+            }
+            console.log(excelTable)
+
+            // localStorage.setItem('storedTemperoryTableHTML',excelTable.innerHTML);
+
+            return excelTable
+        }
+        
+        // UPDATE THE TABLE ROWS USING INDUVIDUAL LEVELS
+        function updateInduvidualTableRowsTypicals(typicals_list,typical,excelTable){
+
+
+            // CHECK IF THE TABLE IS NULL, TAKE ONLY THE INDUVIDUAL VALUES
+            console.log('check again')
+            
+            console.log(typical)
+
+            // To select the row of the dataframe
+            var tableRows = excelTable.rows;
+
+            for (var i = 0; i < tableRows.length; i++){
+
+
+                // Accessing the particular row and column
+                var currentSrNo = tableRows[i].cells[0].textContent.trim();
+
+                // checking if the current value accessed is the typical value
+
+                if (currentSrNo == typical){
+
+                    row_selected = tableRows[i]
+                }
+            }
+
+          
+            console.log(typicals_list)
+            console.log(typical)
+
+            for (var i=0; i<typicals_list.length; i++) {
+
+
+                floor_value_chosen = typicals_list[i]
+
+                excelTable.rows[floor_value_chosen].cells[1].textContent  = row_selected.cells[1].textContent;
+                excelTable.rows[floor_value_chosen].cells[2].textContent  = row_selected.cells[2].textContent;
+                excelTable.rows[floor_value_chosen].cells[3].textContent  = row_selected.cells[3].textContent; 
+
+
+            }
+
+            console.log(excelTable)
+
+            return excelTable
+
+        }
+
+
+
+    function openUnitsModal() {
+
+        var floorListDropdown = document.getElementById('floor_list');
+        var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+
+        document.getElementById('unitsModalHeading').innerText = `Enter the Number of Units for ${selectedFloor}`;
+        document.getElementById('unitsModal').style.display = 'flex';
+
+    }
+
+    function closeUnitsModal() {
+    var openModals = document.getElementsByClassName('open-modal');
+    console.log('This is the modal i am getting through class name',openModals)
+    for (var i = 0; i < openModals.length; i++) {
+        console.log('This is modals captures using i',i,openModals[i])
+        openModals[i].style.display = 'none';
+    }
+}
+    function showUnitsModal() {
+        var checkboxUnits = document.getElementById('no_of_units');
+
+        
+        var floorListDropdown = document.getElementById('floor_list');
+
+        if (checkboxUnits.checked && floorListDropdown.value) {
+            openUnitsModal();
+        }
+    }
+
+
+
+
+
+
+
+    // FOR FUNCTION CALL THAT COMES FROM showTypicalModal
+    function TypicalModals(){
+            currentStep++;
+            console.log('jkjk')
+
+            var floorListDropdown = document.getElementById('floor_list');
+
+            var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+
+            console.log(selectedFloor)
+
+            document.getElementById('enter_typical_unit').value = "Typical " + selectedFloor;
+
+
+            document.getElementById('typicalModal').style.display = 'flex';
+
+            
+
+    }
+
+    // FOR TYPICAL MODAL CALL
+    function showTypicalModal(){
+
+        console.log("this is here")
+
+        
+        
+        var edit_typical = document.getElementById("edit_typical");
+
+        var floorListDropdown = document.getElementById("floor_list");
+
+        console.log(edit_typical)
+        console.log(floorListDropdown)
+
+        console.log("this is there")
+
+        if (edit_typical.checked){
+
+            
+            TypicalModals();
+
+        }
+
+    } 
+
+    // EXECUTE THE TYPICALS BY PRESSING THE SELECT BUTTON
+    function execute_typical(){
+
+        
+
+        // var floorListDropdown = document.getElementById('floor_list');
+
+        // var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+
+
+        //  GETTING THE INPUT TYPICAL VALUES
+
+        selectedFloor = document.getElementById('enter_typical_unit').value 
+
+        selectedFloor = selectedFloor.split('Typical ')[1]
+
+
+         // TO CHECK IF THE FINAL VALUE IS TICKED
+
+         var finals = document.getElementById('final')
+
+        // THE FLOOR RANGES ARE HERE
+
+        var floor_range = document.getElementById('floor_range').value
+
+        var lower_range = floor_range.split('-')[0]
+        var higher_range = floor_range.split('-')[1]
+
+        // THE INDUVIDUAL FLOORS ARE
+
+        var induvidual_floors = document.getElementById('induvidual_floors').value
+
+
+        // Else we get the updated DataFrame
+
+        if (localStorage.getItem('storedUpdateTableHTML') != null) {
+
+            excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML');
+        }
+
+        // gettting the original dataframe, for refersh  
+
+        else{
+
+            excelTable.innerHTML = localStorage.getItem('storedTableHTML');
+
+        }
+        
+
+
+        //  this is to check if more floors are checked and if the range exists
+        if (include_more_floors.checked && floor_range){
+
+            console.log('here')
+
+            console.log(lower_range)
+            console.log(higher_range)
+
+            excelTable =  updateTableRowsTypicals(lower_range,higher_range,selectedFloor,excelTable)
+
+        }
+
+        //  this is to check if more floors are checked and if induvidual floors are included
+
+        if (include_more_floors.checked && induvidual_floors) {
+
+             // if induvidual floors have a value
+
+            var induvidual_floors = induvidual_floors.split(',')
+
+            excelTable = updateInduvidualTableRowsTypicals(induvidual_floors,selectedFloor,excelTable)
+        }
+        //  Check if the final value is checked
+        if (finals.checked){
+
+            console.log("hjihjuhjuihjihjuh")
+
+            localStorage.setItem('storedUpdateTableHTML',excelTable.innerHTML)
+      
+        }
+ 
+       
+    }
+
+
+
+        function updateExcelAndView() {
+            var floorListDropdown = document.getElementById('floor_list');
+            var totalFloors = parseInt(floorListDropdown.value);
+
+            updateTableRows(totalFloors);  
+
+            console.log(floorData);
+        }
+
+
+        // function submitUnits() {
+        //     var unitTypeSelect = document.getElementById("unitType");
+        //     var selectedUnitType = unitTypeSelect.value;
+
+        //     var numberOfUnitsInput = document.getElementById("no_of_units_by_floor");
+        //     var numberOfUnits = numberOfUnitsInput.value;
+
+        //     var areaRangeInput = document.getElementById("area_of_units_range_by_floor");
+        //     var areaRange = areaRangeInput.value;
+
+        //     var areaRangeError = document.getElementById("areaRangeError");
+
+        //     if (parseInt(areaRange) > 120) {
+        //         areaRangeInput.style.border = "2px solid red";
+        //         areaRangeError.innerText = "Please enter an area value below 120.";
+        //         return;
+        //     } else {
+        //         areaRangeInput.style.border = ""; 
+        //         areaRangeError.innerText = "";
+        //     }
+
+        //     var indexToRemove = unitTypeSelect.selectedIndex;
+        //     unitTypeSelect.remove(indexToRemove);
+
+        //     numberOfUnitsInput.value = "";
+        //     areaRangeInput.value = "";
+        // }
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            updateUnitsModalHeading(); 
+        });
+
+       
+        
+
+        function submitUnits() {
+    var unitTypeSelect = document.getElementById("unitType");
+    var selectedUnitType = unitTypeSelect.options[unitTypeSelect.selectedIndex].text;
+
+    var numberOfUnitsInput = document.getElementById("no_of_units_by_floor");
+    var numberOfUnits = numberOfUnitsInput.value;
+
+    var areaRangeInput = document.getElementById("area_of_units_range_by_floor");
+    var areaRange = areaRangeInput.value;
+
+    var areaRangeError = document.getElementById("areaRangeError");
+
+    if (parseInt(areaRange) > 120) {
+        areaRangeInput.style.border = "2px solid red";
+        areaRangeError.innerText = `Please enter an area value below 120 for ${selectedUnitType}.`;
+        return;
+    } else {
+        areaRangeInput.style.border = "";
+        areaRangeError.innerText = "";
+    }
+
+  
+    unitTypeSelect.remove(unitTypeSelect.selectedIndex);
+
+    
+    var nextIndex = unitTypeSelect.selectedIndex;
+    if (nextIndex < unitTypeSelect.options.length) {
+        unitTypeSelect.selectedIndex = nextIndex;
+        updateUnitsModalHeading();
+    } else {
+        closeUnitsModal(); 
+    }
+    numberOfUnitsInput.value = "";
+    areaRangeInput.value = "";
+}
+function goToPreviousStep() {
+
+    console.log('This is previous step in units modal',currentStep)
+    currentStep --;
+    console.log('The previous button has clicked and current step is decreased',currentStep)
+    document.getElementById('unitsModal').style.display = 'none';
+    nextStep()
+
+}
+
+
+document.getElementById('downloadExcelBtn').addEventListener('click', function () {
+    downloadExcel();
+});
+
+//This donwloaded Excel  Can have issues with the compatability on Excel Version opening the file using Online Excel Editor would solve the problem eg.aspose products can be used 
+function downloadExcel() {
+  
+    var table = document.getElementById("excelTable");
+    var tableHTML = table.outerHTML;
+
+    
+    var blob = new Blob([tableHTML], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+   
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'table_data.xlsx';
+
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+
+function goToPreviousStep2() {
+    console.log('This previous step 2 is executed successfully!')
+    currentStep--;
+    console.log('Current step is decreased',currentStep)
+    document.getElementById('nextModal').style.display = 'none';
+
+    if (currentStep === 1) {
+       
+        openModal();
+    } else {
+        document.getElementById('nextModal').style.display = 'flex';
+    }
+}
+
+function goToPreviousStep3() {
+    console.log('This previous step 3 is executed succesfully');
+    currentStep--;
+    console.log('Current step is descreased',currentStep)
+    document.getElementById('areaSpacesModal').style.display = 'none';
+   nextStep();
+   console.log('Back to next step modal hurray!')
+}
+
+function goTypicalToMainModal(){
+
+    console.log('This mainModal step is executed succesfully');
+    console.log('This previous step 3 is executed succesfully');
+
+    currentStep--;
+
+    console.log('Current step is descreased',currentStep)
+    document.getElementById('typicalModal').style.display = 'none';
+    nextStep();
+    console.log('Back to next Main modal hurray!')
+
+
+}
+
+updateTableRows(2); 
+
+    </script>
+</body>
+
+</html>
