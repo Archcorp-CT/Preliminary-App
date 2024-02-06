@@ -799,13 +799,25 @@
                     row_selected = tableRows[i]
                 }
             }
+
+            console.log(row_selected)
             // updating the values specified in the ranges given
 
             for (var i = lower_range; i <= higher_range; i++) {
+
+                for (var j = 1; j<row_selected.cells.length; j++){
+
+
+                    excelTable.rows[i].cells[j].textContent  = row_selected.cells[j].textContent;
+                }
                 
-                excelTable.rows[i].cells[1].textContent  = row_selected.cells[1].textContent;
-                excelTable.rows[i].cells[2].textContent  = row_selected.cells[2].textContent;
-                excelTable.rows[i].cells[3].textContent  = row_selected.cells[3].textContent; 
+                // excelTable.rows[i].cells[1].textContent  = row_selected.cells[1].textContent;
+                // excelTable.rows[i].cells[2].textContent  = row_selected.cells[2].textContent;
+                // excelTable.rows[i].cells[3].textContent  = row_selected.cells[3].textContent; 
+
+                console.log(excelTable.rows[i].cells[2].textContent)
+                console.log("break......")
+                console.log(row_selected.cells[2].textContent)
                
             }
             console.log(excelTable)
@@ -848,11 +860,21 @@
             for (var i=0; i<typicals_list.length; i++) {
 
 
-                floor_value_chosen = typicals_list[i]
+                floor_value_chosen = parseInt(typicals_list[i])
 
-                excelTable.rows[floor_value_chosen].cells[1].textContent  = row_selected.cells[1].textContent;
-                excelTable.rows[floor_value_chosen].cells[2].textContent  = row_selected.cells[2].textContent;
-                excelTable.rows[floor_value_chosen].cells[3].textContent  = row_selected.cells[3].textContent; 
+                for (var j = 1; j<row_selected.cells.length; j++){
+
+
+                        excelTable.rows[floor_value_chosen].cells[j].textContent  = row_selected.cells[j].textContent;
+                }
+
+
+
+                
+
+                // excelTable.rows[floor_value_chosen].cells[1].textContent  = row_selected.cells[1].textContent;
+                // excelTable.rows[floor_value_chosen].cells[2].textContent  = row_selected.cells[2].textContent;
+                // excelTable.rows[floor_value_chosen].cells[3].textContent  = row_selected.cells[3].textContent; 
 
 
             }
@@ -970,8 +992,11 @@
 
         var floor_range = document.getElementById('floor_range').value
 
-        var lower_range = floor_range.split('-')[0]
-        var higher_range = floor_range.split('-')[1]
+
+        // take the lower and higher ranges and convert them to int types
+
+        var lower_range = parseInt(floor_range.split('-')[0])
+        var higher_range = parseInt(floor_range.split('-')[1])
 
         // THE INDUVIDUAL FLOORS ARE
 
