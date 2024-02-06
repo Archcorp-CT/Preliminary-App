@@ -462,10 +462,8 @@
 
                                 <label for="include_more_floors">Check Include include_more_floors</label>
 
-                                
-
                             </div>
-
+            
                             <!-- CHECK TO REMOVE FLOORS -->
 
                             <div style="display: flex; margin-top: 10px;">
@@ -474,23 +472,7 @@
 
 
                                 <label for="remove_floors">Check to remove floors</label>
-                                
-                                
-                            </div>
-
-                               
-                                
-                            </div>
-                            <!-- CHECK TO SWITCH TYPICALS-->
-
-                            <div style="display: flex; margin-top: 10px;">
-
-
-                                <input type="checkbox" id="switch_typicals" name="switch_typicals">
-
-                                <label for="switch_typicals">Check to Switch from one typical to another</label>                           
-                                                              
-                            </div>
+                            
 
                             <!-- CHECK TO EXIT -->
                             <div style="display: flex; margin-top: 10px;">
@@ -506,7 +488,6 @@
 
                             <div>
 
-
                                 <!-- THE BUTTON FOR TYPICAL MODAL -->
 
                                 <button id="previousButton" onclick="goTypicalToMainModal();">Previous</button>
@@ -519,6 +500,55 @@
     
                     </div>
 
+                </div>
+
+            </div>
+
+
+
+            <!-- FOR SWITCHING BETWEEN TYPICALS -->
+
+            <div id="typicalswitchmodal" class="modal" draggable="true">  
+
+
+                <div class="modal-content">
+
+                    <h2>Switch Between Typicals</h2>
+
+                    <div class="form-container">  
+
+                        <!-- this is to select between typicals -->
+                        <div style="display: flex; margin-top: 10px;">
+
+                            <label for="Typical1">Select The From Typical</label>
+                            <br>
+                            <select id="Typical1"> </select>
+
+                        </div>
+                       
+                        <div style="display: flex; margin-top: 10px;">
+                            
+                            <label for="Typical2">Select The To Typical</label>
+                            <br>
+                            <select id="Typical2"></select>
+
+                        </div>
+
+                
+                        <label for="floor-switch"> Enter the floors to be switched </label>
+                        <input id="floor-switch" name="floor-switch"></input>
+
+                        <div>
+
+                            <button id="previousButton" onclick="goSwitchTypicaltoMainTypical()">Previous</button>
+
+                            <button id="select-change" onclick="execute_change()">Select</button>
+
+                        </div>
+
+
+                    </div>    
+                        
                 </div>
 
             </div>
@@ -581,6 +611,8 @@
 
             localStorage.clear('storedUpdateTableHTML')
 
+            localStorage.clear('TypicalList')
+
             document.getElementById('myModal').style.display = 'flex';
 
             // console.log(localStorage.getItem('storedUpdateTableHTML'))
@@ -625,6 +657,8 @@
                   
                 excelTable.innerHTML = "<tr><th>SrNo</th><th>Office_area</th><th>Retail_area</th><th>Studio_area</th></tr>";
 
+                // refTable.innerHTML = "<tr><th>SrNo</th><th>Office_area</th><th>Retail_area</th><th>Studio_area</th></tr>";
+
                 for (var i = 1; i <= totalFloors; i++) {
 
 
@@ -647,7 +681,18 @@
 
                 }
 
+                ref_table = document.createElement('table')
+
+                ref_table.innerHTML = excelTable.innerHTML
+
+                console.log('refernece table')
+
+                console.log(ref_table)
+
+
                 localStorage.setItem('storedTableHTML', excelTable.innerHTML);
+                
+                // localStorage.setItem('storedRefTableHTML', ref_table.innerHTML);
             
             }
             
@@ -731,6 +776,8 @@
     }
 
 
+
+
         function updateTableRows(totalFloors) {
 
 
@@ -778,9 +825,6 @@
 
         function updateTableRowsTypicals(lower_range,higher_range,typical,excelTable){
 
-
-            // excelTable.innerHTML = localStorage.getItem('storedTableHTML');
-
             console.log(typical)
 
             // To select the row of the dataframe
@@ -811,13 +855,10 @@
                     excelTable.rows[i].cells[j].textContent  = row_selected.cells[j].textContent;
                 }
                 
-                // excelTable.rows[i].cells[1].textContent  = row_selected.cells[1].textContent;
-                // excelTable.rows[i].cells[2].textContent  = row_selected.cells[2].textContent;
-                // excelTable.rows[i].cells[3].textContent  = row_selected.cells[3].textContent; 
 
-                console.log(excelTable.rows[i].cells[2].textContent)
-                console.log("break......")
-                console.log(row_selected.cells[2].textContent)
+                // console.log(excelTable.rows[i].cells[2].textContent)
+                // console.log("break......")
+                // console.log(row_selected.cells[2].textContent)
                
             }
             console.log(excelTable)
@@ -832,7 +873,7 @@
 
 
             // CHECK IF THE TABLE IS NULL, TAKE ONLY THE INDUVIDUAL VALUES
-            console.log('check again')
+            console.log('executes here 33')
             
             console.log(typical)
 
@@ -869,21 +910,49 @@
                 }
 
 
-
-                
-
-                // excelTable.rows[floor_value_chosen].cells[1].textContent  = row_selected.cells[1].textContent;
-                // excelTable.rows[floor_value_chosen].cells[2].textContent  = row_selected.cells[2].textContent;
-                // excelTable.rows[floor_value_chosen].cells[3].textContent  = row_selected.cells[3].textContent; 
-
-
             }
 
-            console.log(excelTable)
 
             return excelTable
 
         }
+
+        function removeInduvidualTableRowsTypicals(floor_list){
+        
+
+                // getting the updated excel
+
+                excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML');
+
+                ref_table.innerHTML = localStorage.getItem('storedTableHTML');
+
+
+                var randomrow = excelTable.rows[0];
+
+                // getting all the floor list lenghth    
+
+                for (i=0; i<floor_list.length; i++){
+
+                    floor_value_chosen = parseInt(floor_list[i])
+
+                    console.log(floor_value_chosen)
+
+                    for (var j = 1; j<randomrow.cells.length; j++){
+
+
+                            excelTable.rows[floor_value_chosen].cells[j].textContent  = ref_table.rows[floor_value_chosen].cells[j].textContent;
+                    }
+
+
+                }
+
+
+                console.log(excelTable)
+
+                return excelTable
+
+        }
+
 
 
 
@@ -918,8 +987,115 @@
 
 
 
+    // function switchvalues(typ1,typ2,floor_switch){
+
+    //     // var excel-table = localStorage.getItem('')
+
+    //     console.log("typicals change here")
+    //     var floor1 = parseInt(typ1.split('Floor ')[1])
+
+    //     var floor2 = parseInt(typ2.split('Floor ')[1])
 
 
+    //     console.log(floor1,floor2)
+
+
+
+    // }
+
+    // function typicalswitch(){
+
+    //     let typicalList = JSON.parse(localStorage.getItem('TypicalList'));
+
+    //     document.getElementById('typicalswitchmodal').style.display = 'flex';
+
+    //     var typ1 = document.getElementById('Typical1')
+    //     var typ2 = document.getElementById('Typical2')
+
+
+    //     var button_pressed = document.getElementById('select-change')
+
+
+
+    
+
+    //     typ1.innerHTML = "";
+
+    //     console.log(typicalList)
+
+
+    //     // FOR FIRST TYPICAL - WE ARE LOOPING THROUGH THE LENGHT OF THE TYPICAL LIST AND APPENDING THE OPTIONS WE HAVE
+
+    //     for (var i = 0; i <typicalList.length; i++) {
+
+    //         var option = document.createElement("option");
+
+    //         option.value = typicalList[i];
+    //         option.text = typicalList[i];
+
+    //         typ1.appendChild(option);
+    //     }
+
+    //     // FOR SECOND TYPICAL - WE ARE LOOPING THROUGH THE LENGHT OF THE TYPICAL LIST AND APPENDING THE OPTIONS WE HAVE
+
+    //     for (var i = 0; i <typicalList.length; i++) {
+
+    //         var option = document.createElement("option");
+
+    //         option.value = typicalList[i];
+    //         option.text = typicalList[i];
+
+    //         typ2.appendChild(option);
+
+    //     }    
+
+    //     // var typ1 = document.getElementById('Typical1').value
+
+    //     // var typ2 = document.getElementById('Typical2').value
+
+
+    //     // console.log(typ1)
+
+    //     // console.log(typ2)
+
+
+    //     button_pressed.addEventListener('click',function() {
+
+
+    //                 console.log('button_pressed')
+
+    //                 var floor_switch = document.getElementById('floor-switch').value
+
+    //                 var typ1 = document.getElementById('Typical1').value
+
+    //                 var typ2 = document.getElementById('Typical2').value
+
+    //                 console.log(typ1)
+
+    //                 console.log(typ2)
+
+    //                 console.log(floor_switch)
+
+    //                 if (typ1!=typ2 && floor_switch){
+
+
+    //                     console.log('enters herrs')
+
+    //                     switchvalues(typ1,typ2,floor_switch)
+
+    //                     }
+
+    //                 }
+    //     )
+
+
+    //         // updateExcelAndView(); 
+    //         // document.getElementById('editFloorContainer').style.display = 'none';
+
+    //     console.log('executed')
+
+
+    // }
 
 
     // FOR FUNCTION CALL THAT COMES FROM showTypicalModal
@@ -963,6 +1139,7 @@
             
             TypicalModals();
 
+
         }
 
     } 
@@ -970,16 +1147,40 @@
     // EXECUTE THE TYPICALS BY PRESSING THE SELECT BUTTON
     function execute_typical(){
 
-        
-
-        // var floorListDropdown = document.getElementById('floor_list');
-
-        // var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
-
 
         //  GETTING THE INPUT TYPICAL VALUES
 
+
         selectedFloor = document.getElementById('enter_typical_unit').value 
+
+        console.log(selectedFloor)
+
+        
+
+        // check if the typical value exists in the first place
+
+        if (localStorage.getItem('TypicalList') == null){
+
+            let typicalList = []
+
+            typicalList.push(selectedFloor);
+
+            localStorage.setItem('TypicalList',JSON.stringify(typicalList));
+
+        }
+
+        // if the list already exists pushing the value into a list
+
+        else {
+
+            let typicalList = JSON.parse(localStorage.getItem('TypicalList'));
+
+            typicalList.push(selectedFloor);
+
+            localStorage.setItem('TypicalList',JSON.stringify(typicalList));
+
+            }
+
 
         selectedFloor = selectedFloor.split('Typical ')[1]
 
@@ -1034,14 +1235,33 @@
 
         //  this is to check if more floors are checked and if induvidual floors are included
 
+
+
         if (include_more_floors.checked && induvidual_floors) {
 
-             // if induvidual floors have a value
+                // if induvidual floors have a value
 
-            var induvidual_floors = induvidual_floors.split(',')
+                var induvidual_floors = induvidual_floors.split(',')
 
-            excelTable = updateInduvidualTableRowsTypicals(induvidual_floors,selectedFloor,excelTable)
+                excelTable = updateInduvidualTableRowsTypicals(induvidual_floors,selectedFloor,excelTable)
         }
+
+
+        //  this is to check if remove floors are checked and if induvidual floors are included
+
+        if (remove_floors.checked && induvidual_floors) {
+
+                // if induvidual floors have a value
+                console.log('executes here')
+
+                var induvidual_floors = induvidual_floors.split(',')
+
+                console.log('executes here 2')
+
+                excelTable = removeInduvidualTableRowsTypicals(induvidual_floors)
+        }
+
+
         //  Check if the final value is checked
         if (finals.checked){
 
