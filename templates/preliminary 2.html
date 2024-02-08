@@ -284,17 +284,43 @@
     <div class="card-container">
         <div class="card">
             <h2>Steps</h2>
-            <button class="excel-button" id="new-excel" onclick="openModal()">Create New Excel <i class="fa fa-table"
-                aria-hidden="true"></i></button>
-            <button class="excel-button">Use an Existing Excel <i class="fa fa-table" aria-hidden="true"></i></button>
+            <button class="excel-button" id="new-excel" onclick="openModal()">Create New Excel <i class="fa fa-table" aria-hidden="true"></i> </button>
 
+            <button class="excel-button" id="existing-excel" onclick="choosefile()">Use an Existing Excel <i class="fa fa-table" aria-hidden="true"></i></button>
+
+            <!-- <button class="excel-button" id="exsisting-excel" onclick="chooseexcel()">Use an Existing Excel <i class="fa fa-table" aria-hidden="true"></i></button>    -->
+            
+            <!-- Choose file Modal -->
+
+            <div id="choose-file" class="modal">
+
+                <div class="modal-content">
+
+                    <div class="form-container">
+
+                        <label for="select-file">Select The File Options</label>
+
+                        <select id="select-file" name="select-file">
+
+                        </select>
+
+                        <button id="file-select" name="file-select">Select File</button>
+
+
+                    </div>
+
+                </div>
+
+            </div>
 
             <!-- The initial step -->
             <div id="myModal" class="modal open-modal">
                 <div class="modal-content">
                   
                     <div class="form-container">
+
                         <span class="close-btn" onclick="closeModal()">&times;</span>
+
                         <label for="project_name">Project Name</label>
                         <input type="text" id="project_name" name="project_name" placeholder="Enter your project name">
 
@@ -309,6 +335,7 @@
                 </div>
                
             </div>
+
 
             <!-- THE MAIN MODAL -->
 
@@ -367,6 +394,15 @@
                                 <label for="remove_typical">Remove Typical Values</label>
                             </div>
 
+                            <!-- Save the Excel data by giving it a name -->
+
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="save_excel" name="save_excel" onchange="saveExcelTable()">
+
+                                <label for="save_excel">Save Excel Values</label>
+                            </div>
+
                         </div>
 
 
@@ -376,6 +412,30 @@
                    
                     </div>
                 </div>
+            </div>
+
+             <!-- To save the excel sheets -->
+
+            <div id="save-excel" class="modal">
+
+                <div class="modal-content">
+                    
+                    <h2> Saving The Excel</h2>
+
+                    <div class="form-container">
+
+                        <label for="excel-input">Preliminary Calculation Name</label>
+                        <input type="text" id="excel-input" name="excel-input"> </input>
+
+
+                        <button id="save" onclick="savebutton()">Save</button>
+                        <button id="goback" onclick="goBackMainModal()">Go Back</button>
+
+                    </div>
+
+
+                </div>
+
             </div>
 
             <!-- THE UNITS MODAL -->
@@ -594,9 +654,40 @@
     </div> -->
 
     <script>
+        
+        window.onload = function() {
 
+        console.log(localStorage.getItem('storedTableHTML' + 'SA'))
+
+        // console.log(localStorage.getItem('storedTableHTML'))
+
+        if (localStorage.getItem('calculation_namesHTML') !=null)
+
+        {
+
+            console.log('here ----')
+
+            ref = document.createElement('table')
+
+            ref.innerHTML  = localStorage.getItem('storedTableHTML' + 'SA') 
+
+            console.log(ref)
+
+        }
+
+        else{
+
+            console.log(' not here')
+
+        }
+                    
+        }
         currentStep = 1;
         floorData = [];
+
+        var selected_file
+
+        var totalFloors
        // Retrieve the stored table HTML from localStorage
 
         // var tableHTML = localStorage.getItem('storedTableHTML') || '';
@@ -609,16 +700,12 @@
 
             //  CLEARING THE CACHE OF THE UPDATED TABLES
 
-            localStorage.clear('storedUpdateTableHTML')
+            localStorage.removeItem('storedUpdateTableHTML')
 
-            localStorage.clear('TypicalList')
+            // localStorage.removeItem('calculation_namesHTML')
 
             document.getElementById('myModal').style.display = 'flex';
 
-            // console.log(localStorage.getItem('storedUpdateTableHTML'))
-
-            
-            
         }
 
         function closeModal() {
@@ -626,20 +713,233 @@
             document.getElementById('')
         }
 
-        function nextStep() {
+        // FILE CHOOSING FROM THE DROPDOWN WHEN YOU ARE SUPPOSE TO CHOOSE AN EXISTING FILE FOR THE PROJECT
+
+        function choosefile() {
+        
+            console.log('start')
+            
+            // var existing_excel = document.getElementById('existing-excel')
+
+            console.log('liostr')
+
+
+            // displaying the choose file modal
+
+            var choose_file = document.getElementById('choose-file')
+
+            console.log('ewe')
+
+            choose_file.style.display = 'flex'
+
+            //  getting the file list required
+
+            var file_list = JSON.parse(localStorage.getItem('calculation_namesHTML'))
+
+            console.log(file_list)
+
+            // this for the file select element dropdown
+            var file = document.getElementById('select-file')
+
+
+            // getting the file slect button
+            var select_button = document.getElementById('file-select')
+
+
+            for (var i = 0; i <file_list.length; i++) {
+
+
+                var option = document.createElement("option");
+                option.value = file_list[i];
+
+                option.text = file_list[i];
+
+                file.appendChild(option);
+
+            }
+
+            // hearing if the button is selected
+
+
+            var excelTable = document.getElementById('tableBody')
+
+            // console.log("the table body is",excelTable)
+
+
+            // PRESSING THE BUTTON
+
+            select_button.addEventListener('click',function() {
+      
+                // taking the selcted file
+
+                selected_file = document.getElementById('select-file').value
+
+                // getting the excel file for that local storage
+
+                if (localStorage.getItem('storedUpdateTableHTML'+selected_file) != null){
+
 
             
+                    var tablestore = document.createElement('table')
+
+
+                    tablestore.innerHTML = localStorage.getItem('storedUpdateTableHTML' + selected_file)
+
+
+                    console.log(tablestore)
+                }
+
+                else{
+
+                    var tablestore = document.createElement('table')
+
+                
+                    tablestore.innerHTML = localStorage.getItem('storedTableHTML' + selected_file)
+
+
+                    // excelTable.innerHTML = tablestore.innerHTML
+
+
+
+                }
+
+
+                choose_file.style.display = 'none'
+
+                nextStep()
+
+
+            })
+
+            
+
+
+        }
+
+        // TO SAVE THE EXCEL SHEETS BY PRESSING THE SAVE BUTTON
+        function savebutton() {
+
+            console.log('checked')
+
+
+            console.log('button pressed')
+
+            //  check if the  first calculation names exisit for project
+
+            if (localStorage.getItem('calculation_namesHTML') != null){
+
+                var calculation_names = JSON.parse(localStorage.getItem('calculation_namesHTML'));
+
+
+                console.log('one more time')
+            }
+
+            else
+            
+            {   
+                console.log('this time')
+                var calculation_names = []
+
+            }
+
+            //  pushing the value obtained into calculation_names
+
+            var file = document.getElementById('excel-input').value
+
+            calculation_names.push(file);
+
+
+            localStorage.setItem('calculation_namesHTML',JSON.stringify(calculation_names));
+  
+            // creating an element for storage
+
+            var tablestore = document.createElement('table')
+
+            //  SAVING THE UPDATES BASED ON THE STORED EXCEL VALUES
+            if (localStorage.getItem('storedUpdateTableHTML')!=null){
+
+                tablestore.innerHTML = localStorage.getItem('storedUpdateTableHTML')
+                
+                console.log("tablestore 1")
+
+                localStorage.setItem('storedUpdateTableHTML'+file,tablestore.innerHTML);
+
+            }
+
+            //  SAVING THE CURRENT BASED ON THE STORED EXCEL VALUES
+
+            else {
+
+
+                
+
+
+                console.log("no update table")
+
+
+                console.log("tablestore 2")
+
+                console.log(file)
+
+                tablestore.innerHTML = localStorage.getItem('storedTableHTML')
+
+               
+
+                localStorage.setItem('storedTableHTML' + file,tablestore.innerHTML);
+
+                tablestore.innerHTML = localStorage.getItem('storedTableHTML' + file)
+
+                console.log(tablestore)
+
+            }
+
+
+        }
+
+
+        // CREATING THE SAVE EXCEL DISPLAY FOR THE DISPLAY TABLES
+
+        function saveExcelTable() {
+
+            console.log("save the excel")
+
+            var save_check = document.getElementById('save_excel')
+
+            document.getElementById('save-excel').style.display = 'flex';
+
+
+            //  go back table
+            var goback = document.getElementById('goback')
+
+            // GO BACK EVENT LISTENER
+            goback.addEventListener('click',function(){
+
+                var check = document.getElementById('edit_typical')
+
+                document.getElementById('save-excel').style.display = 'none';
+
+                nextStep()
+
+            })
+
+
+        }
+
+        function nextStep() {
 
 
             currentStep++;
 
             var projectName = document.getElementById('project_name').value;
 
-            var totalFloors = parseInt(document.getElementById('total_floors').value);
+            // totalFloors = document.getElementById('total_floors')
+            
 
             document.getElementById('dynamicTitle').innerText = `Dynamic Excel View for ${projectName}`;
 
             closeModal();
+
+            // document.getElementById('save-excel').style.display = None;
 
             document.getElementById('nextModal').style.display = 'flex';
 
@@ -651,11 +951,73 @@
 
             // we store the original calculation when the value is null
 
-            if (localStorage.getItem('storedUpdateTableHTML') == null) {
+            if (selected_file != null){
+
+
+                    console.log("the if executed")
+
+
+                    if (localStorage.getItem('storedUpdateTableHTML' + selected_file) !=null){
+
+                        excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML' + selected_file)
+                    }
+
+                    else{
+
+                        excelTable.innerHTML = localStorage.getItem('storedTableHTML' + selected_file)
+                    }
+
+                    // localStorage.removeItem('storedTableHTML')
+
+                    // totalFloors = document.getElementById('total_floors')
+
+
+                    localStorage.setItem('storedUpdateTableHTML', excelTable.innerHTML);
+
+                    localStorage.setItem('storedTableHTML', excelTable.innerHTML);
+
+
+                    totalFloors = excelTable.rows.length;
+
+                    console.log(totalFloors)
+
+                    for (var i = 1; i <totalFloors; i++) {
+
+                    var option = document.createElement("option");
+                    option.value = i;
+
+                    option.text = "Floor " + i;
+                    floorListDropdown.appendChild(option);
+
+                    
+                
+                    } 
+
+                    //  CREATING THE REFERENCE TABLES TO BE LATER USED
+
+                    ref_table = document.createElement('table')
+
+                    ref_table.innerHTML = excelTable.innerHTML
+
+
+                    selected_file = null
+                    
+                    // selected_file = none
+
+                    console.log(floorListDropdown)
+
+            }
+
+            else if (localStorage.getItem('storedUpdateTableHTML') == null) {
+
+
+                console.log("the else else if executed")
 
                 console.log('ewewee')
                   
                 excelTable.innerHTML = "<tr><th>SrNo</th><th>Office_area</th><th>Retail_area</th><th>Studio_area</th></tr>";
+
+                totalFloors = parseInt(document.getElementById('total_floors').value);
 
                 // refTable.innerHTML = "<tr><th>SrNo</th><th>Office_area</th><th>Retail_area</th><th>Studio_area</th></tr>";
 
@@ -691,14 +1053,21 @@
 
 
                 localStorage.setItem('storedTableHTML', excelTable.innerHTML);
+
+                
                 
                 // localStorage.setItem('storedRefTableHTML', ref_table.innerHTML);
             
             }
+
             
             //  We bring in the new updates after this
 
             else{
+
+                console.log("the else statmetnis executed")
+                totalFloors = parseInt(document.getElementById('total_floors').value);
+
 
                 for (var i = 1; i <= totalFloors; i++) {
 
@@ -715,6 +1084,7 @@
                 console.log(excelTable)
 
             }
+            
         }
 
             
@@ -742,11 +1112,15 @@
             nextModal.style.display = 'none';
         }
     };
+
+    
     function editFloorList() {
+
             var totalFloorsInput = document.getElementById('edit_total_floors');
             var editFloorContainer = document.getElementById('editFloorContainer');
 
             editFloorContainer.style.display = editFloorContainer.style.display === 'none' ? 'block' : 'none';
+
             if (editFloorContainer.style.display === 'block') {
                 var totalFloors = parseInt(document.getElementById('total_floors').value);
                 totalFloorsInput.value = totalFloors;
@@ -916,6 +1290,9 @@
             return excelTable
 
         }
+
+
+        // REMOVING INDUVIDAUL ROWS
 
         function removeInduvidualTableRowsTypicals(floor_list){
         
@@ -1100,6 +1477,7 @@
 
     // FOR FUNCTION CALL THAT COMES FROM showTypicalModal
     function TypicalModals(){
+
             currentStep++;
             console.log('jkjk')
 
