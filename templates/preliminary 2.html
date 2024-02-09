@@ -1129,21 +1129,69 @@
 
         function updateFloorList() {
 
+            console.log('ghjk')
+
+
+            console.log(excelTable)
+
+            var table_length = excelTable.rows.length
+
+            console.log(table_length)
+        
+
             var totalFloorsInput = document.getElementById('edit_total_floors');
+
             var totalFloors = parseInt(totalFloorsInput.value);
-            console.log('this is totalFloors',totalFloors,'this is total floorsInput',totalFloorsInput)
+
+
+            console.log('this is totalFloors',totalFloors)
+
             document.getElementById('total_floors').value = totalFloors;
 
             var floorListDropdown = document.getElementById('floor_list');
 
             floorListDropdown.innerHTML = "";
 
+            // creating new floor valuess
             for (var i = 1; i <= totalFloors; i++) {
+
                 var option = document.createElement("option");
                 option.value = i;
                 option.text = "Floor " + i;
                 floorListDropdown.appendChild(option);
+
             }
+
+            // appending rown into the excel sheet
+            for (i=table_length; i<=totalFloors; i++){
+
+                var newRow = excelTable.insertRow(-1);
+                var srNoCell = newRow.insertCell(0);
+                srNoCell.innerHTML = "Floor " + i;
+
+                    
+                for (var j = 1; j <= 3; j++) {
+
+                    var cell = newRow.insertCell(j);
+                    cell.innerHTML = "Data " + (i * 3 + j);
+
+                }
+            }
+
+            if (localStorage.getItem('storedUpdateTableHTML')){
+
+
+
+                localStorage.setItem('storedUpdateTableHTML',excelTable.innerHTML)
+
+            }
+
+            else{
+
+                localStorage.setItem('storedTableHTML',excelTable.innerHTML)
+
+            }
+
 
             updateExcelAndView(); 
             document.getElementById('editFloorContainer').style.display = 'none';
@@ -1587,6 +1635,8 @@
         if (localStorage.getItem('storedUpdateTableHTML') != null) {
 
             excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML');
+
+           
         }
 
         // gettting the original dataframe, for refersh  
@@ -1596,6 +1646,9 @@
             excelTable.innerHTML = localStorage.getItem('storedTableHTML');
 
         }
+
+
+        // console.log()
         
 
 
