@@ -556,28 +556,37 @@
         
         
         <div id="areaSpacesModal" class="areaSpaces-Modal">
+
             <div class="areaSpacesModal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
                 <span class="spaces-close-btn" onclick="closeAreaSpacesModal()">&times;</span>
                 <h2 id="areaSpacesModal-heading">Enter the Area of Spaces for {{floor_list}} {{floorListDropdown}}</h2>
                 <div class="form-container">
                     <label for="select_area_of_spaces_ns_gfa" id="select_areaspaces_ns_gfa">Select the unit type for Non Sellable GFA units</label>
+
                     <select id="areaspaces_type" onchange="updateAreaspacesModalHeading()">
-                    <option value="Corridors">Corridors</option>
-                    <option value="Lift shaft">Lift Shaft</option>
-                    <option value="Main Lobby">Main Lobby</option>
-                    <option value="Multipurpose">Multipurpose</option>
-                    <option value="Stairs">Stairs</option>
-                </select>
+
+                        <option value="Corridors">Corridors</option>
+                        <option value="Lift shaft">Lift Shaft</option>
+                        <option value="Main Lobby">Main Lobby</option>
+                        <option value="Multipurpose">Multipurpose</option>
+                        <option value="Stairs">Stairs</option>
+
+                    </select>
+
                 <label for="area_of_spaces_ns_gfa" id="areaspaces_ns_gfa">Enter the area for space for Non Sellable GFA units</label>
                 <input type="text" id="area_of_spaces_ns_gfa" name="area_of_spaces_ns_gfa">
     
                 <label for="unit_type_ns_nn_gfa" id="areaspaces_ns_nn_gfa">Select the unit type for Non Sellable  GFA</label>
+
                 <select id="unit_type_ns_nn_gfa" name="unit_type_ns_nn_gfa">
+
                     <option value="Gym">Gym</option>
                     <option value="Mep service">Mep services</option>
                     <option value="Ramps/Driveway">Ramps/Driveway</option>
+
                 </select>
+
     
                 <label for="area_of_spaces_ns_gfa1" id="area_of_spaces_ns_gfa1">Enter the area for space for Non Sellable Non GFA units</label>
                 <input type="text" id="area_of_spaces_ns_gfa2" name="area_of_spaces_ns_gfa2">
@@ -585,6 +594,7 @@
                 
                 <button onclick="goToPreviousStep3()">Previous</button>
                 <button onclick="submitAreaSpaces()">Submit</button>
+
             </div>
         </div>
         </div>
@@ -706,7 +716,8 @@
                         <th>Mep service</th>
                         <th>Gym</th>
                         <th>Ramps/Driveway</th>
-                        <th>Floor Plate</th>
+                        <th>Total Non Sellable Non GFA</th>
+                        <th>Floor Plate Area</th>
                         <th>Total Sellable GFA</th>
                         <th>Total Sellable Area</th>
                         <th>Total Non Sellable GFA</th>
@@ -1033,7 +1044,7 @@
     console.log('Total Floors',totalFloors)
     if (selected_file != null){
         var headerRow = tableBody.insertRow(-1);
-        var headers = ["SrNo", "Office_area", "Retail_area", "Studio_area", "1BR_area", "2BR_area", "3BR_area", "Office", "Retail", "1BR", "2BR", "3BR", "Studio", "Total units per floor", "Apartment GFA per floor", "Sellable Non GFA (Balcony)", "Lift shaft", "Corridors", "Multipurpose", "Main Lobby", "Stairs", "Mep service", "Gym", "Ramps/Driveway", "Floor Plate", "Total Sellable GFA", "Total Sellable Area", "Total Non Sellable GFA", "Total GFA", "Total BUA", "max_GFA"];
+        var headers = ["SrNo", "Office_area", "Retail_area", "Studio_area", "1BR_area", "2BR_area", "3BR_area", "Office", "Retail", "1BR", "2BR", "3BR", "Studio", "Total units per floor", "Apartment GFA per floor", "Sellable Non GFA (Balcony)", "Lift shaft", "Corridors", "Multipurpose", "Main Lobby", "Stairs", "Mep service", "Gym","Ramps/Driveway","Total Non Sellable Non GFA","Floor Plate Area", "Total Sellable GFA", "Total Sellable Area", "Total Non Sellable GFA", "Total GFA", "Total BUA", "max_GFA"];
         var maxGFAIndex = headers.indexOf("max_GFA");
         console.log("the if executed")
         totalFloors = excelTable.rows.length
@@ -1071,7 +1082,7 @@
         var newRow = tableBody.insertRow(-1);
         newRow.insertCell(0).innerHTML = `Floor ${i}`;
 
-        for (var j = 1; j <= 30; j++) {
+        for (var j = 1; j <headers.length; j++) {
             var cell = newRow.insertCell(j);
             cell.innerHTML = `Data ${j + (i - 1) * 30}`;
 
@@ -1103,7 +1114,7 @@
     // Creating headers for the table only if it's the first time
     else if (localStorage.getItem('storedUpdateTableHTML') == null) {
         var headerRow = tableBody.insertRow(-1);
-        var headers = ["SrNo", "Office_area", "Retail_area", "Studio_area", "1BR_area", "2BR_area", "3BR_area", "Office", "Retail", "1BR", "2BR", "3BR", "Studio", "Total units per floor", "Apartment GFA per floor", "Sellable Non GFA (Balcony)", "Lift shaft", "Corridors", "Multipurpose", "Main Lobby", "Stairs", "Mep service", "Gym", "Ramps/Driveway", "Floor Plate", "Total Sellable GFA", "Total Sellable Area", "Total Non Sellable GFA", "Total GFA", "Total BUA", "max_GFA"];
+        var headers = ["SrNo", "Office_area", "Retail_area", "Studio_area", "1BR_area", "2BR_area", "3BR_area", "Office", "Retail", "1BR", "2BR", "3BR", "Studio", "Total units per floor", "Apartment GFA per floor", "Sellable Non GFA (Balcony)", "Lift shaft", "Corridors", "Multipurpose", "Main Lobby", "Stairs", "Mep service", "Gym","Ramps/Driveway","Total Non Sellable Non GFA","Floor Plate Area", "Total Sellable GFA", "Total Sellable Area", "Total Non Sellable GFA", "Total GFA", "Total BUA", "max_GFA"];
         console.log("the else else if executed")
 
         console.log('ewewee')
@@ -1123,7 +1134,7 @@
         var newRow = tableBody.insertRow(-1);
         newRow.insertCell(0).innerHTML = `Floor ${i}`;
 
-        for (var j = 1; j <= 30; j++) {
+        for (var j = 1; j < headers.length; j++) {
             var cell = newRow.insertCell(j);
             cell.innerHTML = `Data ${j + (i - 1) * 30}`;
 
@@ -1176,7 +1187,7 @@
     // totalFloors = parseInt(document.getElementById('total_floors').value);
     // console.log('This is total floors',totalFloors)
     var headerRow = tableBody.insertRow(-1);
-    var headers = ["SrNo", "Office_area", "Retail_area", "Studio_area", "1BR_area", "2BR_area", "3BR_area", "Office", "Retail", "1BR", "2BR", "3BR", "Studio", "Total units per floor", "Apartment GFA per floor", "Sellable Non GFA (Balcony)", "Lift shaft", "Corridors", "Multipurpose", "Main Lobby", "Stairs", "Mep service", "Gym", "Ramps/Driveway", "Floor Plate", "Total Sellable GFA", "Total Sellable Area", "Total Non Sellable GFA", "Total GFA", "Total BUA", "max_GFA"];
+    var headers = ["SrNo", "Office_area", "Retail_area", "Studio_area", "1BR_area", "2BR_area", "3BR_area", "Office", "Retail", "1BR", "2BR", "3BR", "Studio", "Total units per floor", "Apartment GFA per floor", "Sellable Non GFA (Balcony)", "Lift shaft", "Corridors", "Multipurpose", "Main Lobby", "Stairs", "Mep service", "Gym","Ramps/Driveway","Total Non Sellable Non GFA","Floor Plate Area", "Total Sellable GFA", "Total Sellable Area", "Total Non Sellable GFA", "Total GFA", "Total BUA", "max_GFA"];
     var maxGFAIndex = headers.indexOf("max_GFA");
     for (var i = 1; i <= totalFloors ; i++) {
         var option = document.createElement("option");
@@ -1187,7 +1198,7 @@
         var newRow = tableBody.insertRow(-1);
         newRow.insertCell(0).innerHTML = `Floor ${i}`;
 
-        for (var j = 1; j <= 30; j++) {
+        for (var j = 1; j < headers.length; j++) {
             var cell = newRow.insertCell(j);
             cell.innerHTML = `Data ${j + (i - 1) * 30}`;
 
@@ -1487,47 +1498,53 @@ function saveTableData() {
         var total_sellable_list = [];
         
         function submitAreaSpaces() {
-    var areaSpacesDropdown = document.getElementById("areaspaces_type");
-    var areaSpacesDropdown2 = document.getElementById("unit_type_ns_nn_gfa");
-    var floorListDropdown = document.getElementById('floor_list');
 
-    // Function to submit data for a specific dropdown
-    function submitData(areaSpacesDropdown, areaspacesdropdowntext, index) {
-        var dataDict = {
-            'Floor selected': floorListDropdown.value,
-            'Area Spaces selected': areaSpacesDropdown.value,
-            'Area Spaces Entered': areaspacesdropdowntext
-        };
+            // type of area spaces 1
+            var areaSpacesDropdown = document.getElementById("areaspaces_type");
+            //   type of area spaces 2
+            var areaSpacesDropdown2 = document.getElementById("unit_type_ns_nn_gfa");
+            // taking the floor list dropdown
+            var floorListDropdown = document.getElementById('floor_list');
+
+    
+            // Function to submit data for a specific dropdown
+        function submitData(areaSpacesDropdown, areaspacesdropdowntext, index) {
+
+            var dataDict = {
+                'Floor selected': floorListDropdown.value,
+                'Area Spaces selected': areaSpacesDropdown.value,
+                'Area Spaces Entered': areaspacesdropdowntext
+            };
+
+            var dataDict2 = {
+                'Floor selected': floorListDropdown.value,
+                'Area Spaces selected': areaSpacesDropdown2.value,
+                'Area Spaces Entered': areaspacesdropdowntext2
+            };
       
-        total_sellable_list.push(dataDict);
+            total_sellable_list.push(dataDict);
 
-        console.log('Data dict captured:', dataDict);
-        console.log('This is total sellable list', total_sellable_list);
+            console.log('Data dict captured:', dataDict);
+            console.log('This is total sellable list', total_sellable_list);
         
-        // consolidated_sellable_list = ['Corridors','Lift shaft','Main Lobby','Multipurpose','Stairs','Gym']
+            // consolidated_sellable_list = ['Corridors','Lift shaft','Main Lobby','Multipurpose','Stairs','Gym']
            
-        var consolidated_sellable_list = ['Corridors', 'Lift shaft', 'Main Lobby', 'Multipurpose', 'Stairs','Gym'];
+            var consolidated_sellable_list = ['Corridors', 'Lift shaft', 'Main Lobby', 'Multipurpose', 'Stairs','Gym'];
 
-        // Iterating over total_sellable_list and check if each 'Area Spaces selected' is in consolidated_sellable_list
-        var allMatched = total_sellable_list.every(item => consolidated_sellable_list.includes(item['Area Spaces selected']));
+            // Iterating over total_sellable_list and check if each 'Area Spaces selected' is in consolidated_sellable_list
 
-        if (allMatched) {
-            console.log('Ready for calculating total gfa for all area spaces');
-        } else {
-            console.log('Not all area spaces types match with consolidated_sellable_list');
-        }
-        
-    //     if(areaspacesdropdowntext !== null){
-    //     for (var i = 0; i < areaSpacesDropdown.options.length; i++) {
-    //         var optionText = areaSpacesDropdown.options[i].text;
-    //         console.log('this is i values', optionText);
-    //         total_sellable_list.push(optionText);
-    //     }
+            var allMatched = total_sellable_list.every(item => consolidated_sellable_list.includes(item['Area Spaces selected']));
 
-    //     console.log('This is total sellable list', total_sellable_list);
-    // }
-// Check if the text box is not empty
+            if (allMatched) {
+                console.log('Ready for calculating total gfa for all area spaces');
+            } else {
+                console.log('Not all area spaces types match with consolidated_sellable_list');
+            }
+            
+
+        // / Check if the text box is not empty
         if (areaspacesdropdowntext.trim() !== "") {
+
             var nextIndex = areaSpacesDropdown.selectedIndex + 1;
 
             // Check if there are more options in the dropdown
@@ -1538,136 +1555,198 @@ function saveTableData() {
 
                 // Empty the text box
                 document.getElementById("area_of_spaces_ns_gfa").value = "";
-            } else {
+
+            } 
+            else {
                 // Don't close the modal if no more options
                 // closeAreaSpacesModal(); // Commented out this line
             }
 
             // Update the table
             var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+
+
             var tableBody = document.getElementById('tableBody');
+
             var rows = tableBody.getElementsByTagName('tr');
 
             for (var i = 0; i < rows.length; i++) {
+
                 var cells = rows[i].getElementsByTagName('td');
 
                 if (cells.length > 0 && cells[0].innerText === selectedFloor) {
+
                     var columnIndex = getCellIndexForAreaSpacesTypeDynamic(cells, dataDict['Area Spaces selected']);
+                    console.log("the index 1",columnIndex)
+                    // if (areaspacesdropdowntext2.trim() !== '' && areaSpacesDropdown2){
+
+                    var columnIndex2 = getCellIndexForAreaSpacesTypeDynamic(cells, dataDict2['Area Spaces selected']);
+                        
+                    // }
+                     // FOR THE FIRST DROPDOWN
 
                     if (columnIndex !== -1) {
+
                         var updatedCell = cells[columnIndex];
-                        updatedCell.innerText = `Area spaces selected : ${dataDict['Area Spaces selected']}: Area spaces Entered : ${dataDict['Area Spaces Entered']}`;
+
+                        console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+
+                        updatedCell.innerText = `${dataDict['Area Spaces Entered']}`;
+
+                        console.log(updatedCell)
+
                         highlightCell(updatedCell);
-                        if (NonSellableGFAFields(selectedUnitType, areaRange)) {
-                         updateTotalSellableGFA(cells);
-                         }
-                        highlightCell(updatedCell);
+
                         break;
                     }
                 }
             }
+
+
+            console.log("check 1")
+
+
+            console.log(tableBody)
+
+
+
 
             // Updating the local storage
-            var stored_table_data = JSON.parse(localStorage.getItem('tableData')) || [];
-            var found = false;
+            // var stored_table_data = JSON.parse(localStorage.getItem('tableData')) || [];
 
-            for (var i = 0; i < stored_table_data.length; i++) {
-                var rowData = stored_table_data[i];
-                if (rowData[0] === dataDict['Floor selected']) {
-                    var columnIndex = getCellIndexForAreaSpacesTypeDynamic(cells, dataDict['Area Spaces selected']);
-                    if (columnIndex !== -1) {
-                        rowData[columnIndex] = `${dataDict['Area Spaces selected']}: ${dataDict['Area Spaces Entered']}`;
-                        found = true;
-                        break;
-                    }
-                }
-            }
+            // console.log(stored_table_data)
+            // var found = false;
 
-            if (!found) {
-                stored_table_data.push([
-                    dataDict['Floor selected'],
-                    dataDict['Area Spaces selected'],
-                    `${dataDict['Area Spaces selected']}: ${dataDict['Area Spaces Entered']}`
-                ]);
-            }
+            // for (var i = 0; i < stored_table_data.length; i++) {
+            //     var rowData = stored_table_data[i];
+            //     console.log("row data",rowData)
+            //     if (rowData[0] === dataDict['Floor selected']) {
+            //         var columnIndex = getCellIndexForAreaSpacesTypeDynamic(cells, dataDict['Area Spaces selected']);
+            //         if (columnIndex !== -1) {
+            //             rowData[columnIndex] = `${dataDict['Area Spaces selected']}: ${dataDict['Area Spaces Entered']}`;
+            //             found = true;
+            //             break;
+            //         }
+            //     }
+            // }
 
-            stored_table_data = localStorage.setItem('tableData', JSON.stringify(stored_table_data));
-            console.log('This is stored table data',stored_table_data)
-            updateExcelTable();
+            // console.log("check 2")
+
+            // if (!found) {
+            //     stored_table_data.push([
+            //         dataDict['Floor selected'],
+            //         dataDict['Area Spaces selected'],
+            //         `${dataDict['Area Spaces selected']}: ${dataDict['Area Spaces Entered']}`
+            //     ]);
+            // }
+
+            // stored_table_data = localStorage.setItem('tableData', JSON.stringify(stored_table_data));
+            // console.log('This is stored table data',stored_table_data)
+            // updateExcelTable();
         }
     }
 
     // Submit data for the first dropdown
     var areaspacesdropdowntext = document.getElementById("area_of_spaces_ns_gfa").value;
-    submitData(areaSpacesDropdown, areaspacesdropdowntext, 1);
 
+    // CALLING SUBMIT DATA FOR THE FIRST DROPDOWN
+
+    if (areaspacesdropdowntext != undefined){
+
+        submitData(areaSpacesDropdown, areaspacesdropdowntext, 1);
+
+    }
     // Submit data for the second dropdown
     var areaspacesdropdowntext2 = document.getElementById("area_of_spaces_ns_gfa2").value;
-    submitData(areaSpacesDropdown2, areaspacesdropdowntext2, 2);
+
+    console.log("the texts")
+
+    console.log(areaspacesdropdowntext2)
+
+    // CALLING SUBMIT DATA FOR THE SECOND  DROPDOWN
+
+    if (areaspacesdropdowntext2){
+
+        console.log('true')
+
+        submitData(areaSpacesDropdown2, areaspacesdropdowntext2, 2);
+
+    }
 
     // Additional condition: If both dropdowns are selected and both textboxes are filled, show both in the Excel table
-    if (areaspacesdropdowntext.trim() !== "" && areaspacesdropdowntext2.trim() !== "") {
-        var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
-        var tableBody = document.getElementById('tableBody');
-        var rows = tableBody.getElementsByTagName('tr');
+    // if (areaspacesdropdowntext.trim() !== "" && areaspacesdropdowntext2.trim() !== "") {
 
-        for (var i = 0; i < rows.length; i++) {
-            var cells = rows[i].getElementsByTagName('td');
+    //     var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+    //     var tableBody = document.getElementById('tableBody');
+    //     var rows = tableBody.getElementsByTagName('tr');
 
-            if (cells.length > 0 && cells[0].innerText === selectedFloor) {
-                var columnIndex1 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown.value);
-                var columnIndex2 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown2.value);
+        // for (var i = 0; i < rows.length; i++) {
+        //     var cells = rows[i].getElementsByTagName('td');
 
-                if (columnIndex1 !== -1 && columnIndex2 !== -1) {
-                    var updatedCell1 = cells[columnIndex1];
-                    var updatedCell2 = cells[columnIndex2];
+        //     if (cells.length > 0 && cells[0].innerText === selectedFloor) {
+        //         var columnIndex1 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown.value);
+        //         var columnIndex2 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown2.value);
 
-                    updatedCell1.innerText = `Area spaces selected : ${areaSpacesDropdown.value}: Area spaces Entered : ${areaspacesdropdowntext}`;
-                    updatedCell2.innerText = `Area spaces selected : ${areaSpacesDropdown2.value}: Area spaces Entered : ${areaspacesdropdowntext2}`;
+        //         if (columnIndex1 !== -1 && columnIndex2 !== -1) {
+        //             var updatedCell1 = cells[columnIndex1];
+        //             var updatedCell2 = cells[columnIndex2];
 
-                    highlightCell(updatedCell1);
-                    highlightCell(updatedCell2);
+        //             updatedCell1.innerText = `Area spaces selected : ${areaSpacesDropdown.value}: Area spaces Entered : ${areaspacesdropdowntext}`;
+        //             updatedCell2.innerText = `Area spaces selected : ${areaSpacesDropdown2.value}: Area spaces Entered : ${areaspacesdropdowntext2}`;
 
-                    break;
-                }
-            }
-        }
+        //             highlightCell(updatedCell1);
+        //             highlightCell(updatedCell2);
 
-        var stored_table_data = JSON.parse(localStorage.getItem('tableData')) || [];
-        var found = false;
+        //             break;
+        //         }
+        //     }
+        // }
 
-        for (var i = 0; i < stored_table_data.length; i++) {
-            var rowData = stored_table_data[i];
-            if (rowData[0] === floorListDropdown.value) {
-                var columnIndex1 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown.value);
-                var columnIndex2 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown2.value);
+        // var stored_table_data = JSON.parse(localStorage.getItem('tableData')) || [];
+        // var found = false;
 
-                if (columnIndex1 !== -1 && columnIndex2 !== -1) {
-                    rowData[columnIndex1] = `${areaSpacesDropdown.value}: ${areaspacesdropdowntext}`;
-                    rowData[columnIndex2] = `${areaSpacesDropdown2.value}: ${areaspacesdropdowntext2}`;
-                    found = true;
-                    break;
-                }
-            }
-        }
+        // for (var i = 0; i < stored_table_data.length; i++) {
+        //     var rowData = stored_table_data[i];
+        //     if (rowData[0] === floorListDropdown.value) {
+        //         var columnIndex1 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown.value);
+        //         var columnIndex2 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown2.value);
 
-        if (!found) {
-            stored_table_data.push([
-                floorListDropdown.value,
-                areaSpacesDropdown.value,
-                `${areaSpacesDropdown.value}: ${areaspacesdropdowntext}`
-            ]);
+        //         if (columnIndex1 !== -1 && columnIndex2 !== -1) {
+        //             rowData[columnIndex1] = `${areaSpacesDropdown.value}: ${areaspacesdropdowntext}`;
+        //             rowData[columnIndex2] = `${areaSpacesDropdown2.value}: ${areaspacesdropdowntext2}`;
+        //             found = true;
+        //             break;
+        //         }
+        //     }
+        // }
 
-            stored_table_data.push([
-                floorListDropdown.value,
-                areaSpacesDropdown2.value,
-                `${areaSpacesDropdown2.value}: ${areaspacesdropdowntext2}`
-            ]);
-        }
+        // if (!found) {
+        //     stored_table_data.push([
+        //         floorListDropdown.value,
+        //         areaSpacesDropdown.value,
+        //         `${areaSpacesDropdown.value}: ${areaspacesdropdowntext}`
+        //     ]);
 
-        localStorage.setItem('tableData', JSON.stringify(stored_table_data));
-        updateExcelTable();
-    }
+        //     stored_table_data.push([
+        //         floorListDropdown.value,
+        //         areaSpacesDropdown2.value,
+        //         `${areaSpacesDropdown2.value}: ${areaspacesdropdowntext2}`
+        //     ]);
+        // }
+
+        // // this is the final data available
+
+        // console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+
+    
+        // updateExcelTable();
+
+        // STORING THE DATA INTO LOCAL STORAGE
+
+        
+    // }
+
+    localStorage.setItem('storedUpdateTableHTML',excelTable.innerHTML)
 }
 
 // OFFICE AND RETAIL TYPE IS SELECTED
@@ -2451,6 +2530,10 @@ function updateExcelTable() {
     // Combining the headers and rows into a single array for full view
     var excelTableData = [headers].concat(rows);
 
+    console.log('This is exceltable inside the update excel view function part 2', excelTable);
+
+
+
     // // Save the data to local storage
     // localStorage.setItem('excelTableData', JSON.stringify(excelTableData));
 
@@ -2608,19 +2691,23 @@ function goToPreviousStep2() {
 
 function goToPreviousStep3() {
     console.log('This previous step 3 is executed successfully');
-    currentStep--;
-    console.log('Current step is decreased', currentStep);
+    // currentStep--;
+    
     document.getElementById('areaSpacesModal').style.display = 'none';
     
     // Update the table only if not navigating back to step 1
-    if (currentStep > 1) {
-        console.log('This is current step',currentStep)
-        updateExcelTable();
-    }
+    // if (currentStep > 1) {
+    //     console.log('This is current step',currentStep)
+    //     updateExcelTable();
+    // }
 
     // Go back to the previous step
+    
+
     nextStep();
+
     console.log('Back to next step modal hurray!');
+
 }
 
 function goTypicalToMainModal(){
