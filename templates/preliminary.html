@@ -1,0 +1,2650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <title>Preliminary App</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #aedfff, #549eda);
+            animation: backgroundAnimation 10s infinite alternate-reverse;
+        }
+
+        .title-container {
+           
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-text {
+            margin: 0;
+        }
+        .header-text{
+            font-family: 'Arial', sans-serif;
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            margin-left: 500px;
+            text-align: center;
+            align-items: center;
+        }
+        .header-text:hover{
+            transform: skew(-10deg);
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .card {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 500px;
+            width: 40%;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        /* .card2 {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: auto;
+            min-width: 48%;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            text-align: center;
+        } */
+        .excel-button {
+            background: linear-gradient(135deg, #1eff6b, #00a57c); 
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            max-height: 50px;
+            margin-top: 300px;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        h2{
+            background: linear-gradient(135deg, #00bfff, #0073e6); 
+            -webkit-background-clip: text; 
+            color: transparent; 
+        }
+        .excel-button:hover {
+            background: linear-gradient(135deg, #16d469, #00895f); 
+        }
+        .card2 {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-width: 48%;
+    max-width: 500px;
+    overflow-y: auto; 
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+}
+.card3{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* min-width: 48%; */
+    width: 90%;
+    overflow-y: auto; 
+    padding: 20px;
+    margin-top: 20px;
+    margin-left: 50px;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+}
+    .excel-table {
+        width: 100%; 
+        border-collapse: collapse;
+        margin-top: 20px;
+        overflow-x: auto;
+    }
+
+
+        /* .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        } */
+
+        .excel-table th,
+        .excel-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .excel-table th {
+            background-color: #f2f2f2;
+        }
+        
+        .fixed-column {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background-color: #f2f2f2;
+        }
+        .modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 500px;
+            position:relative;
+            /* margin-right: 700px; */
+        }
+
+        .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 20px;
+        color: #000; 
+        z-index: 2; 
+    }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-container label {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-container button {
+            background: linear-gradient(135deg, #1eff6b, #00a57c);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .form-container button:hover {
+            background: linear-gradient(135deg, #16d469, #00895f);
+        }
+        /* .form-container label {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        } */
+
+        .form-container input[type="checkbox"] {
+            margin-left: 10px; 
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+        }
+
+        .form-container input[type="checkbox"]:checked {
+            background-color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+
+        .form-container input[type="checkbox"]:checked::before {
+            content: '\2713'; 
+            font-size: 16px;
+            color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .units-modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .units-modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 500px;
+            position: relative;
+            /* margin-right: 700px; */
+        }
+
+        .units-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        .areaSpaces-Modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .areaSpacesModal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 500px;
+            /* margin-right: 700px; */
+        }
+
+        .spaces-close-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+        }
+        .error-message{
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .highlight-cell {
+    background-color: yellow; 
+    transition: background-color 1s ease; 
+}
+.status_bg_cd {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    height: 230px;
+    overflow-y: auto;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f8f8f8; /* Light gray background */
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Vertical gap between status cards */
+    margin-right: 300px;
+}
+
+.status-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+   
+    text-align: center;
+    color: #333; /* Dark text color */
+    background-color: #fff; /* White background for status card */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+    cursor: pointer; /* Add pointer cursor on hover */
+}
+
+.status-card:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+}
+
+.color-box {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px; /* Spacing between color box and text */
+    border-radius: 5px;
+}
+
+/* Color definitions */
+.yellow .color-box {
+    background-color: #ffc107; 
+}
+
+.green .color-box {
+    background-color: #28a745; 
+}
+
+.blue .color-box {
+    background-color: #007bff; 
+}
+
+.red .color-box {
+    background-color: #dc3545; 
+}
+.blue-background {
+    background: linear-gradient(to right, #87CEEB, #ADD8E6); 
+    transition: background 1s ease;
+}
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <h1 class="header-text">Preliminary Calculations</h1>
+        <div class="status_bg_cd">
+            <div class="status-card yellow">
+                <div class="color-box" ></div>
+                Values Entered
+            </div>
+            <div class="status-card green">
+                <div class="color-box"></div>
+                Saved Changes
+            </div>
+            <div class="status-card blue">
+                <div class="color-box"></div>
+                Undo Changes
+            </div>
+            <div class="status-card red">
+                <div class="color-box"></div>
+                Deleted
+            </div>
+        </div>
+    </div>
+
+    <div class="card-container">
+        <div class="card">
+            <h2>Steps</h2>
+            <button class="excel-button" onclick="openModal()">Create New Excel <i class="fa fa-table"
+                aria-hidden="true"></i></button>
+                <button class="excel-button" id="existing-excel" onclick="choosefile()">Use an Existing Excel <i class="fa fa-table" aria-hidden="true"></i></button>
+
+                <div id="choose-file" class="modal">
+
+                    <div class="modal-content">
+    
+                        <div class="form-container">
+    
+                            <label for="select-file">Select The File Options</label>
+    
+                            <select id="select-file" name="select-file">
+    
+                            </select>
+    
+                            <button id="file-select" name="file-select">Select File</button>
+    
+    
+                        </div>
+    
+                    </div>
+    
+                </div>
+            <div id="myModal" class="modal open-modal">
+                <div class="modal-content">
+                  
+                    <div class="form-container">
+                        <span class="close-btn" onclick="closeModal()">&times;</span>
+                        <label for="project_name">Project Name</label>
+                        <input type="text" id="project_name" name="project_name" placeholder="Enter your project name">
+
+                        <label for="total_floors">Total Floors</label>
+                        <input type="text" id="total_floors" name="total_floors" placeholder="Enter total floors">
+
+                        <label for="maximum_gfa">Maximum GFA</label>
+                        <input type="text" id="maximum_gfa" name="maximum_gfa" placeholder="Enter maximum GFA">
+
+                        <button onclick="nextStep()">Next</button>
+                    </div>
+                </div>
+               
+            </div>
+
+            <div id="nextModal" class="modal open-modal">
+                <div class="modal-content">
+                  
+                    <h2>Next Step</h2>
+                  
+                    <div class="form-container">
+                        <span class="close-btn" onclick="closeNextModal()">&times;</span>
+                        <label for="floor_list">Select Floor</label>
+                        <select id="floor_list" name="floor_list"></select>
+                        <button onclick="editFloorList()">Edit Floor List</button>
+                        <div id="editFloorContainer" style="display: none;">
+                            <label for="edit_total_floors">Edit Total Floors</label>
+                            <input type="text" id="edit_total_floors" name="edit_total_floors">
+                            <button onclick="updateFloorList()">Update</button>
+                        </div>
+                        <div >
+                            <div style="display: flex; margin-top: 10px;">
+                                <input type="checkbox" id="no_of_units" name="no_of_units" onchange="showUnitsModal()">
+                                <label for="no_of_units">Enter the Number of Units</label>
+
+                            </div>
+                            <div style="display: flex; margin-top: 10px;">
+                                <input type="checkbox" id="area_of_spaces" name="area_of_spaces" onchange="showAreaofSpaces()">
+                                <label for="area_of_spaces">Enter the Area of Spaces</label>
+                            </div>
+
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="edit_typical" name="edit_typical" onchange="showTypicalModal()">
+
+                                <label for="edit_typical">Edit Typical Values</label>
+                            </div>
+
+                    <div style="display: flex; margin-top: 10px;">
+                        <input type="checkbox" id="remove_typical" name="remove_typical">
+                        <label for="remove_typical">Remove Typical Values</label>
+                    </div>
+                    <div style="display: flex; margin-top: 10px;">
+
+                        <input type="checkbox" id="save_excel" name="save_excel" onchange="saveExcelTable()">
+
+                        <label for="save_excel">Save Excel Values</label>
+                    </div>
+                    </div>
+                        <button id="previousButton" onclick="goToPreviousStep2();">Previous</button>
+                        <button onclick="finalStep()">Next</button>
+                   
+                    </div>
+                </div>
+            </div>
+
+            <div id="save-excel" class="modal">
+
+                <div class="modal-content">
+                    
+                    <h2> Saving The Excel</h2>
+
+                    <div class="form-container">
+
+                        <label for="excel-input">Preliminary Calculation Name</label>
+                        <input type="text" id="excel-input" name="excel-input"> </input>
+
+                        <div id="save-message" class="error-message"></div>
+
+                        <button id="save" onclick="savebutton()">Save</button>
+                        <button id="goback" onclick="goBackMainModal()">Go Back</button>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div id="unitsModal" class="units-modal open-modal">
+                <div class="units-modal-content">
+                    <span class="units-close-btn" onclick="closeUnitsModal()">&times;</span>
+                    <h2 id="unitsModalHeading">Enter the Number of Units for 1 Bedroom</h2>
+                    <div class="form-container">
+        
+                        <select id="unitType" name="unitType" onchange="updateUnitsModalHeading()">
+                            <option value="1br">1 BR</option>
+                            <option value="2br">2 BR</option>
+                            <option value="3br">3 BR</option>
+                            <option value="studio">Studio</option>
+                            <option value="retail">Retail</option>
+                            <option value="office">Office</option>
+                        </select>
+        
+                        <label for="no_of_units_by_floor" id="no_of_units_label">Enter the Number of Units:</label>
+                        <input type="text" id="no_of_units_by_floor" name="no_of_units_by_floor">
+        
+                        <label for="area_of_units_range_by_floor" id="area_range_label">Enter the area for units in the range from 0-120:</label>
+                        <input type="text" id="area_of_units_range_by_floor" name="area_of_units_range_by_floor">
+
+                        <div id="areaRangeError" class="error-message"></div>
+
+                        <button onclick="goToPreviousStep()">Previous</button>
+                        <button onclick="submitUnits()">Submit</button>
+                        
+                    </div>
+                </div>
+            </div>
+        
+        
+        <div id="areaSpacesModal" class="areaSpaces-Modal">
+            <div class="areaSpacesModal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <span class="spaces-close-btn" onclick="closeAreaSpacesModal()">&times;</span>
+                <h2 id="areaSpacesModal-heading">Enter the Area of Spaces for {{floor_list}} {{floorListDropdown}}</h2>
+                <div class="form-container">
+                    <label for="select_area_of_spaces_ns_gfa" id="select_areaspaces_ns_gfa">Select the unit type for Non Sellable GFA units</label>
+                    <select id="areaspaces_type" onchange="updateAreaspacesModalHeading()">
+                    <option value="Corridors">Corridors</option>
+                    <option value="Lift shaft">Lift Shaft</option>
+                    <option value="Main Lobby">Main Lobby</option>
+                    <option value="Multipurpose">Multipurpose</option>
+                    <option value="Stairs">Stairs</option>
+                </select>
+                <label for="area_of_spaces_ns_gfa" id="areaspaces_ns_gfa">Enter the area for space for Non Sellable GFA units</label>
+                <input type="text" id="area_of_spaces_ns_gfa" name="area_of_spaces_ns_gfa">
+    
+                <label for="unit_type_ns_nn_gfa" id="areaspaces_ns_nn_gfa">Select the unit type for Non Sellable  GFA</label>
+                <select id="unit_type_ns_nn_gfa" name="unit_type_ns_nn_gfa">
+                    <option value="Gym">Gym</option>
+                    <option value="Mep service">Mep services</option>
+                    <option value="Ramps/Driveway">Ramps/Driveway</option>
+                </select>
+    
+                <label for="area_of_spaces_ns_gfa1" id="area_of_spaces_ns_gfa1">Enter the area for space for Non Sellable Non GFA units</label>
+                <input type="text" id="area_of_spaces_ns_gfa2" name="area_of_spaces_ns_gfa2">
+    
+                
+                <button onclick="goToPreviousStep3()">Previous</button>
+                <button onclick="submitAreaSpaces()">Submit</button>
+            </div>
+        </div>
+        </div>
+          
+        <div id="typicalModal" class="modal" draggable="true">
+
+                <div class="modal-content">
+
+                    <span class="close-btn" onclick="closetypicalModal()">&times;</span>
+
+                    <h2>Next Step edit typicals</h2>
+
+                    <div class="form-container">
+
+                        <label for="enter_typical_unit">Enter typical unit</label>
+
+                        <input type='text' id="enter_typical_unit" name="enter_typical_unit" placeholder="" value=""></input>
+
+
+                        <label for="floor_range">Enter Floor range</label>
+
+                        <input id="floor_range" name="floor_range"></input>
+
+
+                        <label for="induvidual_floors">Enter induvidual floors</label>
+
+                        <input id="induvidual_floors" name="induvidual_floors"></input>
+
+
+                        <!-- CREATING CHECKBOXES -->
+                        <div >
+
+                            <!-- CHECK TO INCLUDE MORE FLOORS -->
+
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="include_more_floors" name="include_more_floors">
+
+                                <label for="include_more_floors">Check Include include_more_floors</label>
+
+                                
+
+                            </div>
+
+                            <!-- CHECK TO REMOVE FLOORS -->
+
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="remove_floors" name="remove_floors">
+
+
+                                <label for="remove_floors">Check to remove floors</label>
+                                
+                                
+                            </div>
+
+                               
+                                
+                            </div>
+                            <!-- CHECK TO SWITCH TYPICALS-->
+
+
+                            <!-- CHECK TO EXIT -->
+                            <div style="display: flex; margin-top: 10px;">
+
+                                <input type="checkbox" id="final" name="final">
+
+
+                                <label for="final">Check to be Final Value</label> 
+                                                             
+                            </div>
+
+                            <!-- CLICKING THE BUTTON TO GO TO NEXT STEP -->
+
+                            <div>
+
+
+                                <!-- THE BUTTON FOR TYPICAL MODAL -->
+
+                                <button id="previousButton" onclick="goTypicalToMainModal();">Previous</button>
+
+                                <button id="select"  onclick="execute_typical()">Select</button>
+
+                            </div>
+
+                        </div>
+    
+                    </div>
+
+                </div>
+        </div>
+
+        <div class="card2">
+            <h2 id="dynamicTitle">Dynamic Excel View</h2>
+            <table class="excel-table" id="excelTable">
+                <thead>
+                    <tr>
+                        <th>SrNo</th>
+                        <th>Office_area</th>
+                        <th>Retail_area</th>
+                        <th>Studio_area</th>
+                        <th>1BR_area</th>
+                        <th>2BR_area</th>
+                        <th>3BR_area</th>
+                        <th>Office</th>
+                        <th>Retail</th>
+                        <th>1BR</th>
+                        <th>2BR</th>
+                        <th>3BR</th>
+                        <th>Studio</th>
+                        <th>Total units per floor</th>
+                        <th>Apartment GFA per floor</th>
+                        <th>Sellable Non GFA (Balcony)</th>
+                        <th>Lift shaft</th>
+                        <th>Corridors</th>
+                        <th>Multipurpose</th>
+                        <th>Main Lobby</th>
+                        <th>Stairs</th>
+                        <th>Mep service</th>
+                        <th>Gym</th>
+                        <th>Ramps/Driveway</th>
+                        <th>Floor Plate</th>
+                        <th>Total Sellable GFA</th>
+                        <th>Total Sellable Area</th>
+                        <th>Total Non Sellable GFA</th>
+                        <th>Total GFA</th>
+                        <th>Total BUA</th>
+                        <th>max_GFA</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                  
+                </tbody>
+            </table>
+            <button class="excel-button" id="downloadExcelBtn" onclick="downloadExcel();">Download Excel</button>
+
+        </div>
+      
+        
+
+</div>
+<div class="card3">
+    <h2 id="dynamicTitle">Final Outputs</h2>
+
+    <div id="display-final-outpuuts">
+
+
+    </div>
+    
+    <button class="excel-button" id="downloadExcelBtn" onclick="downloadExcel();">Reports View</button>
+
+</div>
+     <!-- Modal -->
+     <!-- <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Create New Excel</h2>
+            
+        </div>
+    </div> -->
+
+    <script>
+        currentStep = 1;
+        floorData = [];
+
+        var selected_file
+        var totalFloors
+
+
+        function openModal() {
+            localStorage.removeItem('storedUpdateTableHTML')
+            document.getElementById('myModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+            document.getElementById('')
+          
+        }
+
+
+        
+        function choosefile() {
+        
+        console.log('start')
+        
+        // var existing_excel = document.getElementById('existing-excel')
+
+        console.log('liostr')
+
+
+        // displaying the choose file modal
+
+        var choose_file = document.getElementById('choose-file')
+
+        console.log('ewe')
+
+        choose_file.style.display = 'flex'
+
+        //  getting the file list required
+
+        var file_list = JSON.parse(localStorage.getItem('calculation_namesHTML'))
+
+        console.log(file_list)
+
+        // this for the file select element dropdown
+        var file = document.getElementById('select-file')
+
+
+        // getting the file slect button
+        var select_button = document.getElementById('file-select')
+
+
+        for (var i = 0; i <file_list.length; i++) {
+
+
+            var option = document.createElement("option");
+            option.value = file_list[i];
+
+            option.text = file_list[i];
+
+            file.appendChild(option);
+
+        }
+
+        // hearing if the button is selected
+
+
+        var excelTable = document.getElementById('tableBody')
+
+        // console.log("the table body is",excelTable)
+
+
+        // PRESSING THE BUTTON
+
+        select_button.addEventListener('click',function() {
+  
+            // taking the selcted file
+
+            selected_file = document.getElementById('select-file').value
+
+            // getting the excel file for that local storage
+
+            if (localStorage.getItem('storedUpdateTableHTML'+selected_file) != null){
+
+
+        
+                var tablestore = document.createElement('table')
+
+
+                tablestore.innerHTML = localStorage.getItem('storedUpdateTableHTML' + selected_file)
+
+
+                console.log(tablestore)
+            }
+
+            else{
+
+                var tablestore = document.createElement('table')
+
+            
+                tablestore.innerHTML = localStorage.getItem('storedTableHTML' + selected_file)
+
+
+                // excelTable.innerHTML = tablestore.innerHTML
+
+
+
+            }
+
+
+            choose_file.style.display = 'none'
+
+            nextStep()
+
+
+        })
+
+        
+
+
+    }
+
+     // TO SAVE THE EXCEL SHEETS BY PRESSING THE SAVE BUTTON
+     function savebutton() {
+
+        console.log('checked')
+
+
+        console.log('button pressed')
+
+       
+
+    //  check if the  first calculation names exisit for project
+
+        if (localStorage.getItem('calculation_namesHTML') != null){
+
+            var calculation_names = JSON.parse(localStorage.getItem('calculation_namesHTML'));
+
+
+            console.log('one more time')
+        }
+
+        else
+
+        {   
+            console.log('this time')
+            var calculation_names = []
+
+        }
+
+        //  pushing the value obtained into calculation_names
+
+        var file = document.getElementById('excel-input').value
+       
+
+        var message = document.getElementById('save-message')
+
+        message.innerText = "The Table is saved succesfully"
+
+
+        console.log(file)
+       
+
+        calculation_names.push(file);
+
+
+        localStorage.setItem('calculation_namesHTML',JSON.stringify(calculation_names));
+
+        // creating an element for storage
+
+        var tablestore = document.createElement('table')
+
+        //  SAVING THE UPDATES BASED ON THE STORED EXCEL VALUES
+        if (localStorage.getItem('storedUpdateTableHTML')!=null){
+
+            tablestore.innerHTML = localStorage.getItem('storedUpdateTableHTML')
+            
+            console.log("tablestore 1")
+
+            localStorage.setItem('storedUpdateTableHTML'+file,tablestore.innerHTML);
+
+        }
+
+        //  SAVING THE CURRENT BASED ON THE STORED EXCEL VALUES
+
+        else {
+
+            
+
+            tablestore.innerHTML = localStorage.getItem('storedTableHTML')
+
+        
+
+            localStorage.setItem('storedTableHTML' + file,tablestore.innerHTML);
+
+            tablestore.innerHTML = localStorage.getItem('storedTableHTML' + file)
+
+            console.log(tablestore)
+
+            }
+
+
+    }
+
+
+        // CREATING THE SAVE EXCEL DISPLAY FOR THE DISPLAY TABLES
+
+        function saveExcelTable() {
+
+        console.log("save the excel")
+
+        // var save_check = document.getElementById('save_excel')
+
+        document.getElementById('save-excel').style.display = 'flex';
+
+        // CREATING MESSAGE ELEMENT, GIVING IT AN EMPTY VALUE
+        var message = document.getElementById('save-message')
+
+        message.innerText = " "
+
+        // var file = document.getElementById('excel-input').value
+
+        
+
+        //  go back table
+        var goback = document.getElementById('goback')
+
+        // GO BACK EVENT LISTENER
+        goback.addEventListener('click',function(){
+
+            var check = document.getElementById('edit_typical')
+
+            document.getElementById('save-excel').style.display = 'none';
+
+            nextStep()
+
+        })
+
+
+        }
+        function nextStep() {
+
+    currentStep++;
+
+    
+    // Assuming 'excelTable' is the ID of your table element
+    var excelTable = document.getElementById("excelTable");
+
+    // Store the HTML content of the table in local storage
+    localStorage.setItem('savedExcelTable', excelTable.outerHTML);
+    // previousFloors = localStorage.setItem('previousfloors',totalFloors)
+    
+    if (localStorage.getItem('storedUpdateTableHTML')!=null){
+
+        excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML')
+
+    }
+    
+    
+
+
+    console.log('This is excel table beginning of next step execution',excelTable)
+
+
+    console.log('This is the current step in the next step function', currentStep);
+    console.log('Excel table in the next step', localStorage.getItem('storedTableHTML'));
+    console.log('This is the maximum GFA', document.getElementById("maximum_gfa").value);
+   // Get user input for Maximum GFA
+    var maximumGFA = parseFloat(document.getElementById("maximum_gfa").value);
+
+    var projectName = document.getElementById('project_name').value;
+    // var totalFloors = parseInt(document.getElementById('total_floors').value);
+    // previousFloors = localStorage.setItem('previousfloors',totalFloors)
+    // console.log('This is previous floors',previousFloors)
+    document.getElementById('dynamicTitle').innerText = `Dynamic Excel View for ${projectName}`;
+
+    closeModal();
+    document.getElementById('nextModal').style.display = 'flex';
+
+    var floorListDropdown = document.getElementById('floor_list');
+    floorListDropdown.innerHTML = "";
+
+    var tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = "";
+    console.log('Total Floors',totalFloors)
+    if (selected_file != null){
+        var headerRow = tableBody.insertRow(-1);
+        var headers = ["SrNo", "Office_area", "Retail_area", "Studio_area", "1BR_area", "2BR_area", "3BR_area", "Office", "Retail", "1BR", "2BR", "3BR", "Studio", "Total units per floor", "Apartment GFA per floor", "Sellable Non GFA (Balcony)", "Lift shaft", "Corridors", "Multipurpose", "Main Lobby", "Stairs", "Mep service", "Gym", "Ramps/Driveway", "Floor Plate", "Total Sellable GFA", "Total Sellable Area", "Total Non Sellable GFA", "Total GFA", "Total BUA", "max_GFA"];
+        var maxGFAIndex = headers.indexOf("max_GFA");
+        console.log("the if executed")
+        totalFloors = excelTable.rows.length
+        console.log('Total floors in existing excel',totalFloors,excelTable)
+        if (localStorage.getItem('storedUpdateTableHTML' + selected_file) !=null){
+
+            excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML' + selected_file)
+        }
+
+        else{
+
+            excelTable.innerHTML = localStorage.getItem('storedTableHTML' + selected_file)
+        }
+
+        // localStorage.removeItem('storedTableHTML')
+
+        // totalFloors = document.getElementById('total_floors')
+
+
+        localStorage.setItem('storedUpdateTableHTML', excelTable.innerHTML);
+
+        localStorage.setItem('storedTableHTML', excelTable.innerHTML);
+
+
+        totalFloors = excelTable.rows.length;
+
+        console.log(totalFloors)
+
+        for (var i = 1; i <= totalFloors -2; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = `Floor ${i}`;
+        floorListDropdown.appendChild(option);
+
+        var newRow = tableBody.insertRow(-1);
+        newRow.insertCell(0).innerHTML = `Floor ${i}`;
+
+        for (var j = 1; j <= 30; j++) {
+            var cell = newRow.insertCell(j);
+            cell.innerHTML = `Data ${j + (i - 1) * 30}`;
+
+            // Highlight cells in the "max_GFA" column with a yellow background
+            if (j === maxGFAIndex) {
+                highlightCell(cell);
+            }
+        }
+
+        // Set Maximum GFA value for the corresponding column
+        newRow.cells[maxGFAIndex].innerHTML = maximumGFA.toFixed(2);
+    }
+        //  CREATING THE REFERENCE TABLES TO BE LATER USED
+
+        ref_table = document.createElement('table')
+
+        ref_table.innerHTML = excelTable.innerHTML
+
+
+        selected_file = null
+
+        // selected_file = none
+
+        console.log(floorListDropdown)
+
+        }
+
+
+    // Creating headers for the table only if it's the first time
+    else if (localStorage.getItem('storedUpdateTableHTML') == null) {
+        var headerRow = tableBody.insertRow(-1);
+        var headers = ["SrNo", "Office_area", "Retail_area", "Studio_area", "1BR_area", "2BR_area", "3BR_area", "Office", "Retail", "1BR", "2BR", "3BR", "Studio", "Total units per floor", "Apartment GFA per floor", "Sellable Non GFA (Balcony)", "Lift shaft", "Corridors", "Multipurpose", "Main Lobby", "Stairs", "Mep service", "Gym", "Ramps/Driveway", "Floor Plate", "Total Sellable GFA", "Total Sellable Area", "Total Non Sellable GFA", "Total GFA", "Total BUA", "max_GFA"];
+        console.log("the else else if executed")
+
+        console.log('ewewee')
+        
+        // excelTable.innerHTML = "<tr><th>SrNo</th><th>Office_area</th><th>Retail_area</th><th>Studio_area</th></tr>";
+
+        // totalFloors = excelTable.rows.length;
+        totalFloors = document.getElementById("total_floors").value
+        // refTable.innerHTML = "<tr><th>SrNo</th><th>Office_area</th><th>Retail_area</th><th>Studio_area</th></tr>";
+        var maxGFAIndex = headers.indexOf("max_GFA");
+        for (var i = 1; i <= totalFloors; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = `Floor ${i}`;
+        floorListDropdown.appendChild(option);
+
+        var newRow = tableBody.insertRow(-1);
+        newRow.insertCell(0).innerHTML = `Floor ${i}`;
+
+        for (var j = 1; j <= 30; j++) {
+            var cell = newRow.insertCell(j);
+            cell.innerHTML = `Data ${j + (i - 1) * 30}`;
+
+            // Highlight cells in the "max_GFA" column with a yellow background
+            if (j === maxGFAIndex) {
+                highlightCell(cell);
+            }
+        }
+
+        // Set Maximum GFA value for the corresponding column
+        newRow.cells[maxGFAIndex].innerHTML = maximumGFA.toFixed(2);
+    }
+        
+       ref_table = document.createElement('table')
+
+        ref_table.innerHTML = excelTable.innerHTML
+
+        console.log('refernece table')
+
+        console.log(ref_table)
+
+
+        localStorage.setItem('storedTableHTML', excelTable.innerHTML);
+
+
+
+        // for (var i = 0; i < headers.length; i++) {
+        //     var th = document.createElement("th");
+        //     th.innerHTML = headers[i];
+        //     headerRow.appendChild(th);
+        // }
+    }
+
+    else{
+
+    console.log("the else statmetnis executed",totalFloors)
+    // totalFloors = excelTable.rows.length;
+    // const tbodies = excelTable.getElementsByTagName("tbody");
+    // console.log('tbodies',tbodies,tbodies.length)
+    // console.log('This is total floors',excelTable.rows.length)
+    // console.log('This is excel table',excelTable)
+    // console.log('tbodies',tbodies,tbodies.innerHTML,tbodies.childNodes)
+    // if (tbodies.length > 0) {
+    //     const rows = tbodies[0].getElementsByTagName("tr");
+    //     console.log('Total number of rows:', rows.length);
+    //     console.log('Rows:', rows);
+    // } else {
+    //     console.log('No tbody found in the table.');
+    // }
+    // totalFloors = parseInt(document.getElementById('total_floors').value);
+    // console.log('This is total floors',totalFloors)
+    var headerRow = tableBody.insertRow(-1);
+    var headers = ["SrNo", "Office_area", "Retail_area", "Studio_area", "1BR_area", "2BR_area", "3BR_area", "Office", "Retail", "1BR", "2BR", "3BR", "Studio", "Total units per floor", "Apartment GFA per floor", "Sellable Non GFA (Balcony)", "Lift shaft", "Corridors", "Multipurpose", "Main Lobby", "Stairs", "Mep service", "Gym", "Ramps/Driveway", "Floor Plate", "Total Sellable GFA", "Total Sellable Area", "Total Non Sellable GFA", "Total GFA", "Total BUA", "max_GFA"];
+    var maxGFAIndex = headers.indexOf("max_GFA");
+    for (var i = 1; i <= totalFloors ; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = `Floor ${i}`;
+        floorListDropdown.appendChild(option);
+
+        var newRow = tableBody.insertRow(-1);
+        newRow.insertCell(0).innerHTML = `Floor ${i}`;
+
+        for (var j = 1; j <= 30; j++) {
+            var cell = newRow.insertCell(j);
+            cell.innerHTML = `Data ${j + (i - 1) * 30}`;
+
+            // Highlight cells in the "max_GFA" column with a yellow background
+            if (j === maxGFAIndex) {
+                highlightCell(cell);
+            }
+        }
+
+        // Set Maximum GFA value for the corresponding column
+        newRow.cells[maxGFAIndex].innerHTML = maximumGFA.toFixed(2);
+    }
+        
+    excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML')
+
+console.log(excelTable)
+
+}
+    // var maxGFAIndex = headers.indexOf("max_GFA");
+    // console.log('This is total floors',totalFloors)
+    // for (var i = 1; i <= totalFloors; i++) {
+    //     var option = document.createElement("option");
+    //     option.value = i;
+    //     option.text = `Floor ${i}`;
+    //     floorListDropdown.appendChild(option);
+
+    //     var newRow = tableBody.insertRow(-1);
+    //     newRow.insertCell(0).innerHTML = `Floor ${i}`;
+
+    //     for (var j = 1; j <= 30; j++) {
+    //         var cell = newRow.insertCell(j);
+    //         cell.innerHTML = `Data ${j + (i - 1) * 30}`;
+
+    //         // Highlight cells in the "max_GFA" column with a yellow background
+    //         if (j === maxGFAIndex) {
+    //             highlightCell(cell);
+    //         }
+    //     }
+
+    //     // Set Maximum GFA value for the corresponding column
+    //     newRow.cells[maxGFAIndex].innerHTML = maximumGFA.toFixed(2);
+    // }
+    
+
+    // ref_table = document.createElement('table');
+    // ref_table.innerHTML = excelTable.innerHTML;
+    // localStorage.setItem('storedTableHTML', excelTable.innerHTML);
+    
+}
+      
+function closeNextModal() {
+        var nextModal = document.getElementById('nextModal');
+        if (!nextModal.getAttribute('draggable')) {
+            nextModal.style.display = 'none';
+        }
+    }
+
+
+        function closeNextModal() {
+            document.getElementById('nextModal').style.display = 'none';
+        }
+        window.onclick = function (event) {
+        var modal = document.getElementById('myModal');
+        var nextModal = document.getElementById('nextModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+        if (event.target == nextModal) {
+            nextModal.style.display = 'none';
+        }
+    };
+    function editFloorList() {
+            var totalFloorsInput = document.getElementById('edit_total_floors');
+            var editFloorContainer = document.getElementById('editFloorContainer');
+
+            editFloorContainer.style.display = editFloorContainer.style.display === 'none' ? 'block' : 'none';
+            if (editFloorContainer.style.display === 'block') {
+                var totalFloors = parseInt(document.getElementById('total_floors').value);
+                totalFloorsInput.value = totalFloors;
+            }
+        }
+       
+        function updateFloorList() {
+        var totalFloorsInput = document.getElementById('edit_total_floors');
+        var totalFloors = parseInt(totalFloorsInput.value);
+        document.getElementById('total_floors').value = totalFloors;
+        localStorage.setItem('floorlist', JSON.stringify(totalFloors));
+        var floorListDropdown = document.getElementById('floor_list');
+        floorListDropdown.innerHTML = "";
+
+        for (var i = 1; i <= totalFloors; i++) {
+            var option = document.createElement("option");
+            option.value = i;
+            option.text = "Floor " + i;
+            floorListDropdown.appendChild(option);
+        }
+
+        var tableBody = document.getElementById('tableBody');
+
+        // If there is a saved table, insert its rows
+        if (localStorage.getItem('storedTableHTML') !== null) {
+            var savedExcelTable = document.createElement('div');
+            savedExcelTable.innerHTML = localStorage.getItem('storedTableHTML');
+
+            // Copy rows from the saved table to the current table
+            for (var i = 0; i < savedExcelTable.childNodes.length; i++) {
+                if (savedExcelTable.childNodes[i].nodeName === 'TBODY') {
+                    var savedRows = savedExcelTable.childNodes[i].getElementsByTagName('tr');
+
+                    for (var j = 0; j < savedRows.length; j++) {
+                        var newRow = tableBody.insertRow(-1);
+                        newRow.innerHTML = savedRows[j].innerHTML;
+                        console.log('new row inside savedexcel', newRow);
+                        // Add a class to existing rows
+                        newRow.classList.add('existing-row');
+                    }
+                }
+            }
+        }
+
+        // Add new rows for newly added floors
+        for (var i = tableBody.rows.length - 1; i < totalFloors; i++) {
+            var newRow = tableBody.insertRow(-1);
+            var srNoCell = newRow.insertCell(0);
+            srNoCell.innerHTML = "Floor " + (i + 1);
+            console.log('new row in new floors', newRow, srNoCell, srNoCell.innerHTML);
+            // You can modify this loop to populate the new cells with your desired data
+            for (var j = 1; j <= 30; j++) {
+                var cell = newRow.insertCell(j);
+                cell.innerHTML = "New Data " + ((tableBody.rows.length + i) * 30 + j);
+            }
+
+            // Add a class to newly added rows
+            newRow.classList.add('new-row', 'blue-background');
+        }
+        if (localStorage.getItem('storedUpdateTableHTML')){
+
+
+
+        localStorage.setItem('storedUpdateTableHTML',excelTable.innerHTML)
+
+        }
+
+        else{
+
+        localStorage.setItem('storedTableHTML',excelTable.innerHTML)
+
+        }
+        // After 3 seconds, remove the class from new rows to end the color-changing effect
+        setTimeout(function () {
+            var newRows = document.getElementsByClassName('new-row');
+            while (newRows.length > 0) {
+                newRows[0].classList.remove('new-row', 'blue-background');
+            }
+        }, 3000);
+    }
+
+    // Save the updated table data if needed
+    // saveTableData();
+
+
+
+// function saveExistingValues() {
+//     var tableBody = document.getElementById('tableBody');
+//     var existingValues = [];
+//     for (var i = 0; i < tableBody.rows.length; i++) {
+//         var floorRow = tableBody.rows[i];
+//         var floorDetails = {
+//             floor: floorRow.cells[0].innerText,
+//         };
+//         for (var j = 1; j <= 6; j++) {
+//             floorDetails['Data ' + j] = floorRow.cells[j].innerText;
+//         }
+//         existingValues.push(floorDetails);
+//     }
+//     return existingValues;
+// }
+
+function saveTableData() {
+    var tableBody = document.getElementById('tableBody');
+    var tableData = [];
+    for (var i = 0; i < tableBody.rows.length; i++) {
+        var rowData = [];
+        var floorRow = tableBody.rows[i];
+        for (var j = 0; j < floorRow.cells.length; j++) {
+            rowData.push(floorRow.cells[j].innerText);
+        }
+        tableData.push(rowData);
+    }
+    localStorage.setItem('tableData', JSON.stringify(tableData));
+}
+
+// function updateTableRows(totalFloors) {
+//     var tableBody = document.getElementById('tableBody');
+//     tableBody.innerHTML = ""; // Clear existing rows
+
+//     floorData = [];
+
+//     for (var i = 1; i <= totalFloors; i++) {
+//         var row = tableBody.insertRow();
+//         var cellSrNo = row.insertCell(0);
+//         cellSrNo.innerHTML = "Floor " + i;
+
+//         // Update the loop to handle 30 columns
+//         for (var j = 1; j <= 30; j++) {
+//             var cell = row.insertCell(j);
+//             cell.innerHTML = "Data " + ((i - 1) * 30 + j); // Adjust the calculation for the correct data
+//         }
+
+//         floorData.push({
+//             floor: i,
+//             // Add other properties for the additional columns if needed
+//         });
+//     }
+// }
+
+// floorData= updateTableRows(floorData)
+// console.log('This is floor data after the updatetable rows function call',floorData )
+
+// updateTableRows(totalFloors);
+
+
+        function openUnitsModal() {
+        var floorListDropdown = document.getElementById('floor_list');
+        var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+
+        document.getElementById('unitsModalHeading').innerText = `Enter the Number of Units for ${selectedFloor}`;
+        document.getElementById('unitsModal').style.display = 'flex';
+    }
+
+    function closeUnitsModal() {
+    var openModals = document.getElementsByClassName('open-modal');
+    // console.log('This is the modal i am getting through class name',openModals)
+    for (var i = 0; i < openModals.length; i++) {
+        console.log('This is modals captures using i',i,openModals[i])
+        openModals[i].style.display = 'none';
+    }
+}
+    function showUnitsModal() {
+        var checkboxUnits = document.getElementById('no_of_units');
+        var floorListDropdown = document.getElementById('floor_list');
+
+        if (checkboxUnits.checked && floorListDropdown.value) {
+            openUnitsModal();
+        }
+    }
+    function showAreaofSpaces() {
+            var checkboxSpaces = document.getElementById('area_of_spaces');
+            var floorListDropdown = document.getElementById('floor_list');
+
+            if (checkboxSpaces.checked && floorListDropdown.value) {
+                openAreaofSpacesModal();
+            }
+        }
+
+        function openAreaofSpacesModal() {
+            currentStep++;
+            window.onload = function (){
+                if ( localStorage.getItem('areaspacesdropdownindex') !==null ){
+                    console.log('This is selected index in the start of the area spaces modal',localStorage.getItem('areaspacesdropdownindex'))
+                }else{
+                    console.log('selected index is null')
+                }
+            }
+            var floorListDropdown = document.getElementById("floor_list");
+            var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+        //     var floorListDropdown = document.getElementById('floor_list');
+        // var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+
+        document.getElementById('unitsModalHeading').innerText = `Enter the Number of Units for ${selectedFloor}`;
+            console.log('This is under area of spaces modal dynamically changing the heading of area spaces modal !')
+            document.getElementById("areaSpacesModal-heading").innerText = `  Enter the Area of Spaces for ${selectedFloor}`;
+            console.log('The current step was less when it was not increased',currentStep)
+            currentStep ++;
+            console.log('The current step has increased',currentStep)
+            document.getElementById('areaSpacesModal').style.display = 'flex';
+        }
+
+        function closeAreaSpacesModal() {
+            document.getElementById('areaSpacesModal').style.display = 'none';
+        }
+
+        // function updateAreaspacesModalHeading() {
+        //     var areaspaces_type = document.getElementById("areaspaces_type");
+        //     var selectedareaspaces = areaspaces_type.options[areaspaces_type.selectedIndex].text;
+        //     var areaspaces_type2 = document.getElementById("unit_type_ns_nn_gfa");
+        //     var selectedareaspaces2 = areaspaces_type2.options[areaspaces_type2.selectedIndex].text;
+        //     console.log('This is selected area spaces type',selectedareaspaces)
+        //     document.getElementById("select_areaspaces_ns_gfa").innerText = `Select the unit type for Non Sellable GFA units for ${selectedareaspaces}`;
+        //     document.getElementById("areaSpacesModal-heading").innerText = `Enter the area for space for Non Sellable GFA units for ${selectedareaspaces}`;
+        //     document.getElementById("areaspaces_ns_gfa").innerText = `Enter the Number of Units for ${selectedareaspaces}:`;
+        //     document.getElementById("areaspaces_ns_nn_gfa").innerText = `Select the unit type  for Non Sellable Non GFA units for ${selectedareaspaces2}:`;
+        //     document.getElementById("area_of_spaces_ns_gfa1").innerText = `Enter the area for space for Non Sellable Non GFA units for ${selectedareaspaces2}:`;
+        // }
+        
+        
+        var total_sellable_list = [];
+        
+        function submitAreaSpaces() {
+    var areaSpacesDropdown = document.getElementById("areaspaces_type");
+    var areaSpacesDropdown2 = document.getElementById("unit_type_ns_nn_gfa");
+    var floorListDropdown = document.getElementById('floor_list');
+
+    // Function to submit data for a specific dropdown
+    function submitData(areaSpacesDropdown, areaspacesdropdowntext, index) {
+        var dataDict = {
+            'Floor selected': floorListDropdown.value,
+            'Area Spaces selected': areaSpacesDropdown.value,
+            'Area Spaces Entered': areaspacesdropdowntext
+        };
+      
+        total_sellable_list.push(dataDict);
+
+        console.log('Data dict captured:', dataDict);
+        console.log('This is total sellable list', total_sellable_list);
+        
+        // consolidated_sellable_list = ['Corridors','Lift shaft','Main Lobby','Multipurpose','Stairs','Gym']
+           
+        var consolidated_sellable_list = ['Corridors', 'Lift shaft', 'Main Lobby', 'Multipurpose', 'Stairs','Gym'];
+
+        // Iterating over total_sellable_list and check if each 'Area Spaces selected' is in consolidated_sellable_list
+        var allMatched = total_sellable_list.every(item => consolidated_sellable_list.includes(item['Area Spaces selected']));
+
+        if (allMatched) {
+            console.log('Ready for calculating total gfa for all area spaces');
+        } else {
+            console.log('Not all area spaces types match with consolidated_sellable_list');
+        }
+        
+    //     if(areaspacesdropdowntext !== null){
+    //     for (var i = 0; i < areaSpacesDropdown.options.length; i++) {
+    //         var optionText = areaSpacesDropdown.options[i].text;
+    //         console.log('this is i values', optionText);
+    //         total_sellable_list.push(optionText);
+    //     }
+
+    //     console.log('This is total sellable list', total_sellable_list);
+    // }
+// Check if the text box is not empty
+        if (areaspacesdropdowntext.trim() !== "") {
+            var nextIndex = areaSpacesDropdown.selectedIndex + 1;
+
+            // Check if there are more options in the dropdown
+            if (nextIndex < areaSpacesDropdown.options.length) {
+                areaSpacesDropdown.selectedIndex = nextIndex;
+                openAreaofSpacesModal();
+                updateAreaspacesModalHeading();
+
+                // Empty the text box
+                document.getElementById("area_of_spaces_ns_gfa").value = "";
+            } else {
+                // Don't close the modal if no more options
+                // closeAreaSpacesModal(); // Commented out this line
+            }
+
+            // Update the table
+            var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+            var tableBody = document.getElementById('tableBody');
+            var rows = tableBody.getElementsByTagName('tr');
+
+            for (var i = 0; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName('td');
+
+                if (cells.length > 0 && cells[0].innerText === selectedFloor) {
+                    var columnIndex = getCellIndexForAreaSpacesTypeDynamic(cells, dataDict['Area Spaces selected']);
+
+                    if (columnIndex !== -1) {
+                        var updatedCell = cells[columnIndex];
+                        updatedCell.innerText = `Area spaces selected : ${dataDict['Area Spaces selected']}: Area spaces Entered : ${dataDict['Area Spaces Entered']}`;
+                        highlightCell(updatedCell);
+                        if (NonSellableGFAFields(selectedUnitType, areaRange)) {
+                         updateTotalSellableGFA(cells);
+                         }
+                        highlightCell(updatedCell);
+                        break;
+                    }
+                }
+            }
+
+            // Updating the local storage
+            var stored_table_data = JSON.parse(localStorage.getItem('tableData')) || [];
+            var found = false;
+
+            for (var i = 0; i < stored_table_data.length; i++) {
+                var rowData = stored_table_data[i];
+                if (rowData[0] === dataDict['Floor selected']) {
+                    var columnIndex = getCellIndexForAreaSpacesTypeDynamic(cells, dataDict['Area Spaces selected']);
+                    if (columnIndex !== -1) {
+                        rowData[columnIndex] = `${dataDict['Area Spaces selected']}: ${dataDict['Area Spaces Entered']}`;
+                        found = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!found) {
+                stored_table_data.push([
+                    dataDict['Floor selected'],
+                    dataDict['Area Spaces selected'],
+                    `${dataDict['Area Spaces selected']}: ${dataDict['Area Spaces Entered']}`
+                ]);
+            }
+
+            stored_table_data = localStorage.setItem('tableData', JSON.stringify(stored_table_data));
+            console.log('This is stored table data',stored_table_data)
+            updateExcelTable();
+        }
+    }
+
+    // Submit data for the first dropdown
+    var areaspacesdropdowntext = document.getElementById("area_of_spaces_ns_gfa").value;
+    submitData(areaSpacesDropdown, areaspacesdropdowntext, 1);
+
+    // Submit data for the second dropdown
+    var areaspacesdropdowntext2 = document.getElementById("area_of_spaces_ns_gfa2").value;
+    submitData(areaSpacesDropdown2, areaspacesdropdowntext2, 2);
+
+    // Additional condition: If both dropdowns are selected and both textboxes are filled, show both in the Excel table
+    if (areaspacesdropdowntext.trim() !== "" && areaspacesdropdowntext2.trim() !== "") {
+        var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+        var tableBody = document.getElementById('tableBody');
+        var rows = tableBody.getElementsByTagName('tr');
+
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+
+            if (cells.length > 0 && cells[0].innerText === selectedFloor) {
+                var columnIndex1 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown.value);
+                var columnIndex2 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown2.value);
+
+                if (columnIndex1 !== -1 && columnIndex2 !== -1) {
+                    var updatedCell1 = cells[columnIndex1];
+                    var updatedCell2 = cells[columnIndex2];
+
+                    updatedCell1.innerText = `Area spaces selected : ${areaSpacesDropdown.value}: Area spaces Entered : ${areaspacesdropdowntext}`;
+                    updatedCell2.innerText = `Area spaces selected : ${areaSpacesDropdown2.value}: Area spaces Entered : ${areaspacesdropdowntext2}`;
+
+                    highlightCell(updatedCell1);
+                    highlightCell(updatedCell2);
+
+                    break;
+                }
+            }
+        }
+
+        var stored_table_data = JSON.parse(localStorage.getItem('tableData')) || [];
+        var found = false;
+
+        for (var i = 0; i < stored_table_data.length; i++) {
+            var rowData = stored_table_data[i];
+            if (rowData[0] === floorListDropdown.value) {
+                var columnIndex1 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown.value);
+                var columnIndex2 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown2.value);
+
+                if (columnIndex1 !== -1 && columnIndex2 !== -1) {
+                    rowData[columnIndex1] = `${areaSpacesDropdown.value}: ${areaspacesdropdowntext}`;
+                    rowData[columnIndex2] = `${areaSpacesDropdown2.value}: ${areaspacesdropdowntext2}`;
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            stored_table_data.push([
+                floorListDropdown.value,
+                areaSpacesDropdown.value,
+                `${areaSpacesDropdown.value}: ${areaspacesdropdowntext}`
+            ]);
+
+            stored_table_data.push([
+                floorListDropdown.value,
+                areaSpacesDropdown2.value,
+                `${areaSpacesDropdown2.value}: ${areaspacesdropdowntext2}`
+            ]);
+        }
+
+        localStorage.setItem('tableData', JSON.stringify(stored_table_data));
+        updateExcelTable();
+    }
+}
+
+// OFFICE AND RETAIL TYPE IS SELECTED
+function isOfficeAndRetailSelected(selectedUnitType, areaRange) {
+    // Check if 'office' and 'retail' are selected with area range provided
+    
+    console.log('This is office and retail selected with area range',areaSpacesDropdown,areaSpacesDropdown2)
+
+    return (selectedUnitType.toLowerCase() === 'office' || selectedUnitType.toLowerCase() === 'retail') && areaRange.trim() !== '';
+}
+
+// APARTMENT TYPES ARE SELECTED
+
+// function isApartmentTypesSelected(selectedUnitType, areaRange) {
+//     // Check if 'office' and 'retail' are selected with area range provided
+//     console.log('This is office and retail selected with area range',selectedUnitType,areaRange)
+//     return (selectedUnitType.toLowerCase() === '1br' || selectedUnitType.toLowerCase() === '2br' || selectedUnitType.toLowerCase() === '3br' || selectedUnitType.toLowerCase() === 'studio') && areaRange.trim() !== '';
+// }
+
+function getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesType) {
+        var tableHeaders = document.getElementById('excelTable').getElementsByTagName('th');
+
+        for (var i = 0; i < tableHeaders.length; i++) {
+            if (tableHeaders[i].innerText === areaSpacesType) {
+                return i;
+            }
+        }
+
+        return -1; // return -1 if not found
+    }
+
+
+function updateAreaspacesModalHeading() {
+    var areaspaces_type = document.getElementById("areaspaces_type");
+    var selectedareaspaces = areaspaces_type.options[areaspaces_type.selectedIndex].text;
+
+    var areaspaces_type2 = document.getElementById("unit_type_ns_nn_gfa");
+    var selectedareaspaces2 = areaspaces_type2.options[areaspaces_type2.selectedIndex].text;
+
+    console.log('This is selected area spaces type', selectedareaspaces);
+    console.log('This is selected area spaces type for dropdown 2', selectedareaspaces2);
+
+    document.getElementById("select_areaspaces_ns_gfa").innerText = `Select the unit type for Non Sellable GFA units for ${selectedareaspaces}`;
+    document.getElementById("areaSpacesModal-heading").innerText = `Enter the area for space for Non Sellable GFA units for ${selectedareaspaces}`;
+    document.getElementById("areaspaces_ns_gfa").innerText = `Enter the Number of Units for ${selectedareaspaces}:`;
+    document.getElementById("areaspaces_ns_nn_gfa").innerText = `Select the unit type  for Non Sellable Non GFA units for ${selectedareaspaces2}:`;
+    document.getElementById("area_of_spaces_ns_gfa1").innerText = `Enter the area for space for Non Sellable Non GFA units for ${selectedareaspaces2}`;
+}
+
+function handleAreaSpacesChange() {
+    var areaSpacesDropdown = document.getElementById("areaspaces_type");
+    areaSpacesDropdown.selectedIndex = 0; 
+}
+
+
+// var floorList = document.getElementById('floor_list');
+// floorList.addEventListener('change', handleFloorChange,handleAreaSpacesChange);
+
+document.addEventListener
+
+        function updateExcelAndView() {
+            var floorListDropdown = document.getElementById('floor_list');
+            var totalFloors = parseInt(floorListDropdown.value);
+
+            updateTableRows(totalFloors);  
+
+            console.log('this is floordata in update and excel view function',floorData);
+        }
+
+        // SHOWING THE TYPICAL MODALS
+        function TypicalModals(){
+            currentStep++;
+            console.log('jkjk')
+
+            var floorListDropdown = document.getElementById('floor_list');
+
+            var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+
+            console.log(selectedFloor)
+
+            document.getElementById('enter_typical_unit').value = "Typical " + selectedFloor;
+
+
+            document.getElementById('typicalModal').style.display = 'flex';
+            totalFloors = floorListDropdown.value
+            totalFloors = document.getElementById("total_floors").value
+            console.log(":inside typical",totalFloors )
+
+    }
+
+    // FOR TYPICAL MODAL CALL TO SHOW THE TYPICAL MODALS
+    function showTypicalModal(){
+
+        console.log("this is here")
+
+        
+        
+        var edit_typical = document.getElementById("edit_typical");
+
+        var floorListDropdown = document.getElementById("floor_list");
+
+        console.log(edit_typical)
+        console.log(floorListDropdown)
+
+        console.log("this is there")
+
+        if (edit_typical.checked){
+
+            
+            TypicalModals();
+
+        }
+
+    } 
+
+    // EXECUTE THE TYPICALS BY PRESSING THE SELECT BUTTON
+    function execute_typical(){
+
+        console.log('This function is executed')
+
+        // var floorListDropdown = document.getElementById('floor_list');
+
+        // var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+
+
+        //  GETTING THE INPUT TYPICAL VALUES 
+
+        console.log(":inside typical", totalFloors)
+
+        selectedFloor = document.getElementById('enter_typical_unit').value 
+
+       
+        selectedFloor = selectedFloor.split('Typical ')[1]
+
+
+         // TO CHECK IF THE FINAL VALUE IS TICKED
+
+         var finals = document.getElementById('final')
+
+        // THE FLOOR RANGES ARE HERE
+
+        var floor_range = document.getElementById('floor_range').value
+
+        var lower_range = parseInt(floor_range.split('-')[0])
+        var higher_range = parseInt(floor_range.split('-')[1])
+
+        // THE INDUVIDUAL FLOORS ARE
+
+        var induvidual_floors = document.getElementById('induvidual_floors').value
+
+
+        // Else we get the updated DataFrame
+
+        if (localStorage.getItem('storedUpdateTableHTML') != null) {
+
+            excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML');
+        }
+
+        // gettting the original dataframe, for refersh  
+
+        else{
+
+            excelTable.innerHTML = localStorage.getItem('storedTableHTML');
+
+        }
+
+        console.log("the typical excel table")
+
+        console.log(excelTable)
+        
+
+
+        //  this is to check if more floors are checked and if the range exists
+        if (include_more_floors.checked && floor_range){
+
+            console.log('here')
+
+            console.log(lower_range)
+            console.log(higher_range)
+
+            excelTable =  updateTableRowsTypicals(lower_range,higher_range,selectedFloor,excelTable)
+
+        }
+
+        //  this is to check if more floors are checked and if induvidual floors are included
+
+        if (include_more_floors.checked && induvidual_floors) {
+
+             // if induvidual floors have a value
+
+            var induvidual_floors = induvidual_floors.split(',')
+
+            excelTable = updateInduvidualTableRowsTypicals(induvidual_floors,selectedFloor,excelTable)
+        }
+        if (remove_floors.checked && induvidual_floors) {
+
+        // if induvidual floors have a value
+        console.log('executes here')
+
+        var induvidual_floors = induvidual_floors.split(',')
+
+        console.log('executes here 2')
+
+        excelTable = removeInduvidualTableRowsTypicals(induvidual_floors)
+        }
+        //  Check if the final value is checked
+        if (finals.checked){
+
+            console.log("hjihjuhjuihjihjuh")
+
+            localStorage.setItem('storedUpdateTableHTML',excelTable.innerHTML)
+      
+        }
+ 
+       
+    }
+
+    function updateTableRowsTypicals(lower_range,higher_range,typical,excelTable){
+
+
+            // excelTable.innerHTML = localStorage.getItem('storedTableHTML');
+
+            console.log(typical)
+
+            // To select the row of the dataframe
+            // excelTable.innerHTML = "<tr> <th>SrNo</th><th>Office_area</th><th>Retail_area</th><th>Studio_area</th><th>1BR_area</th><th>2BR_area</th><th>3BR_area</th><th>Office</th><th>Retail</th><th>1BR</th><th>2BR</th><th>3BR</th><th>Studio</th><th>Total units per floor</th><th>Apartment GFA per floor</th><th>Sellable Non GFA (Balcony)</th><th>Lift shaft</th><th>Corridors</th><th>Multipurpose</th><th>Main Lobby</th><th>Stairs</th> <th>Mep service</th><th>Gym</th><th>Ramps/Driveway</th><th>Floor Plate</th><th>Total Sellable GFA</th><th>Total Sellable Area</th><th>Total Non Sellable GFA</th><th>Total GFA</th><th>Total BUA</th><th>max_GFA</th></tr>"
+    
+            var tableRows = excelTable.rows;
+            console.log("tablerows length",tableRows.length)
+            console.log('This is table rows',tableRows)
+            console.log('excel table',excelTable)
+            for (var i = 2; i < parseInt(tableRows.length); i++){
+
+
+                // Accessing the particular row and column
+                var currentSrNo = tableRows[i].cells[0].textContent.trim();
+                console.log('This is accessed',currentSrNo,'this is typical',typical)
+            // checking if the current value accessed is the typical value
+
+                if (currentSrNo == typical){
+                    console.log('inside if')
+                    row_selected = tableRows[i]
+                    console.log("row selected")
+                    console.log(row_selected)
+                }
+                // row_selected = tableRows[i].cells[0]
+                // console.log('current sr no',currentSrNo)
+                // console.log('row selected',row_selected)
+            }
+            console.log('Loop completed')
+            // updating the values specified in the ranges given
+            for (var i = lower_range; i <= higher_range; i++) {
+
+            for (var j = 1; j<row_selected.cells.length; j++){
+
+
+                excelTable.rows[i + 1].cells[j].textContent  = row_selected.cells[j].textContent;
+            }
+
+            // excelTable.rows[i].cells[1].textContent  = row_selected.cells[1].textContent;
+            // excelTable.rows[i].cells[2].textContent  = row_selected.cells[2].textContent;
+            // excelTable.rows[i].cells[3].textContent  = row_selected.cells[3].textContent; 
+
+            console.log(excelTable.rows[i].cells[2].textContent)
+            console.log("break......")
+            console.log(row_selected.cells[2].textContent)
+
+            }
+            console.log(excelTable)
+
+            // localStorage.setItem('storedTemperoryTableHTML',excelTable.innerHTML);
+
+            return excelTable
+}
+
+// UPDATE THE TABLE ROWS USING INDUVIDUAL LEVELS
+function updateInduvidualTableRowsTypicals(typicals_list,typical,excelTable){
+
+
+    // CHECK IF THE TABLE IS NULL, TAKE ONLY THE INDUVIDUAL VALUES
+    console.log('check again')
+
+    console.log(typical)
+
+    // To select the row of the dataframe
+    var tableRows = excelTable.rows;
+    console.log('This is table rows in individual floors',tableRows)
+    for (var i = 2; i < tableRows.length; i++){
+
+
+        // Accessing the particular row and column
+        var currentSrNo = tableRows[i].cells[0].textContent.trim();
+        console.log('Current sr no',currentSrNo)
+        // checking if the current value accessed is the typical value
+
+            if (currentSrNo == typical){
+
+                row_selected = tableRows[i]
+            }
+        }
+
+
+        console.log(typicals_list)
+        console.log(typical)
+
+        for (var i=0; i<typicals_list.length; i++) {
+
+
+        floor_value_chosen = parseInt(typicals_list[i])
+
+        for (var j = 1; j<row_selected.cells.length; j++){
+
+
+                excelTable.rows[floor_value_chosen + 1].cells[j].textContent  = row_selected.cells[j].textContent;
+        }
+
+
+
+
+
+    // excelTable.rows[floor_value_chosen].cells[1].textContent  = row_selected.cells[1].textContent;
+    // excelTable.rows[floor_value_chosen].cells[2].textContent  = row_selected.cells[2].textContent;
+    // excelTable.rows[floor_value_chosen].cells[3].textContent  = row_selected.cells[3].textContent; 
+
+
+        }
+
+        console.log(excelTable)
+
+        return excelTable
+
+}
+
+function removeInduvidualTableRowsTypicals(floor_list){
+        
+
+        // getting the updated excel
+
+        excelTable.innerHTML = localStorage.getItem('storedUpdateTableHTML');
+
+        ref_table.innerHTML = localStorage.getItem('storedTableHTML');
+
+        console.log(excelTable.rows.length)
+        console.log(ref_table.rows.length)
+
+        console.log('this is excel table',excelTable)
+        console.log('This is ref table ',ref_table)
+
+        var randomrow =  ref_table.rows[0];
+        console.log('This is ref table ',randomrow,randomrow.cells,randomrow.cells.length)
+        // getting all the floor list lenghth    
+        console.log('floor list',floor_list)
+
+        for (i=0; i<floor_list.length; i++){
+        
+            floor_value_chosen = parseInt(floor_list[i])
+
+            console.log(floor_value_chosen)
+
+            for (var j = 1; j<randomrow.cells.length; j++){
+
+                    // console.log('excel table rows', excelTable.rows[floor_value_chosen])
+                    // console.log('ref table rows',ref_table.rows[floor_value_chosen])
+                    excelTable.rows[floor_value_chosen+1].cells[j].textContent  = ref_table.rows[floor_value_chosen+1].cells[j].textContent;
+
+                    console.log('excel table rows', excelTable.rows[floor_value_chosen])
+                    // console.log('ref table rows',ref_table.rows[floor_value_chosen])
+                    console.log('Finish')
+            }
+
+
+        }
+
+
+        console.log(excelTable)
+
+        return excelTable
+
+}
+
+
+
+        // function submitUnits() {
+        //     var unitTypeSelect = document.getElementById("unitType");
+        //     var selectedUnitType = unitTypeSelect.value;
+
+        //     var numberOfUnitsInput = document.getElementById("no_of_units_by_floor");
+        //     var numberOfUnits = numberOfUnitsInput.value;
+
+        //     var areaRangeInput = document.getElementById("area_of_units_range_by_floor");
+        //     var areaRange = areaRangeInput.value;
+
+        //     var areaRangeError = document.getElementById("areaRangeError");
+
+        //     if (parseInt(areaRange) > 120) {
+        //         areaRangeInput.style.border = "2px solid red";
+        //         areaRangeError.innerText = "Please enter an area value below 120.";
+        //         return;
+        //     } else {
+        //         areaRangeInput.style.border = ""; 
+        //         areaRangeError.innerText = "";
+        //     }
+
+        //     var indexToRemove = unitTypeSelect.selectedIndex;
+        //     unitTypeSelect.remove(indexToRemove);
+
+        //     numberOfUnitsInput.value = "";
+        //     areaRangeInput.value = "";
+        // }
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            updateUnitsModalHeading(); 
+        });
+
+        function updateUnitsModalHeading() {
+            var unitTypeSelect = document.getElementById("unitType");
+            var selectedUnitType = unitTypeSelect.options[unitTypeSelect.selectedIndex].text;
+
+            document.getElementById("unitsModalHeading").innerText = `Enter the Number of Units for ${selectedUnitType}`;
+            document.getElementById("no_of_units_label").innerText = `Enter the Number of Units for ${selectedUnitType}:`;
+            document.getElementById("area_range_label").innerText = `Enter the area for units in the range from 0-120 for ${selectedUnitType}:`;
+        }
+        
+        document.addEventListener("DOMContentLoaded",function(){
+            updateAreaspacesModalHeading();
+        })
+
+function submitUnits() {
+
+        var unitTypeSelect = document.getElementById("unitType");
+        var selectedUnitType = unitTypeSelect.options[unitTypeSelect.selectedIndex].text;
+
+        console.log('This is selected unit type', selectedUnitType);
+
+        var numberOfUnitsInput = document.getElementById("no_of_units_by_floor");
+        var numberOfUnits = numberOfUnitsInput.value;
+
+        var areaRangeInput = document.getElementById("area_of_units_range_by_floor");
+        var areaRange = areaRangeInput.value;
+
+        var areaRangeError = document.getElementById("areaRangeError");
+
+        if (parseInt(areaRange) > 120) {
+            areaRangeInput.style.border = "2px solid red";
+            areaRangeError.innerText = `Please enter an area value below 120 for ${selectedUnitType}.`;
+            return;
+        } else {
+            areaRangeInput.style.border = "";
+            areaRangeError.innerText = "";
+        }
+
+        var dataDict = {
+            'Floor selected': document.getElementById('floor_list').value,
+            'Unit Type selected': selectedUnitType,
+            'Units Entered': numberOfUnits,
+            'Area range': areaRange
+        };
+
+        console.log(dataDict);
+
+        numberOfUnitsInput.value = "";
+        areaRangeInput.value = "";
+
+        var floorListDropdown = document.getElementById('floor_list');
+        var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
+
+        var tableBody = document.getElementById('tableBody');
+        var rows = tableBody.getElementsByTagName('tr');
+
+        // Find the correct row in the table
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            if (cells.length > 0 && cells[0].innerText === selectedFloor) {
+
+
+                // Find the correct column index based on the selected unit type, THIS CAN BE A LIST DEPENDING ON THE UNIT TYPE SELECTED
+
+                var columnIndex = getCellIndexForUnitType(selectedUnitType);
+
+
+                if (columnIndex !== -1) {
+
+                    // CHECKING IF THE COLUMNINDEX IS A ARRAY, THIS IS FOR APARTMENT TYPES MOSTLY
+                    if (Array.isArray(columnIndex)){
+
+                        // LOOPING THROUGH IT
+
+                        for (var r=0; r<columnIndex.length; r++) {
+
+                            // WE GET THE  CELL NUMBERS OF THE APARTMENT TYPE AREA AND APARTMENT TYPE NUMBER
+
+                            var updatedCell = cells[columnIndex[r]];
+
+                            // WE PASS THE INNER TEXT OF THE UPDATED CELL WITH THE SUITABLE VALUE
+
+                            // FIRST INDEX FOR AREA
+                            if (r==0){
+
+                                updatedCell.innerText = `${dataDict['Area range']}`;
+
+                                // Highlighting the updated cell
+                                highlightCell(updatedCell);
+
+                            }
+
+                            // SECOND INDEX FOR NUMBER OF UNITS
+
+                            else{
+
+                                updatedCell.innerText = `${dataDict['Units Entered']}`;
+                                 // Highlighting the updated cell
+                                highlightCell(updatedCell);
+                            }                  
+
+                        }
+                    }
+
+                    // THIS ELSE IS FOR RETAIL AND OFFICE AREAS
+
+                    else{
+                        
+                        var updatedCell = cells[columnIndex];
+
+                        // Updating the entire row or cell with the new data dictionary 
+                        console.log('if condition is true')
+                        var updatedCell = cells[columnIndex];
+                        updatedCell.innerText = `Units Entered: ${dataDict['Units Entered']}, Area range: ${dataDict['Area range']}`;
+
+                        // Highlighting the updated cell
+                        highlightCell(updatedCell);
+                    }
+
+                    
+                    // check if office and retail places are selected
+
+                    
+
+                    if (isOfficeAndRetailSelected(selectedUnitType, areaRange)) {
+                        updateTotalSellableGFA(cells);
+                    }
+  
+                    // Check if apartment types are selected
+                    if (isApartmentTypesSelected(selectedUnitType,areaRange)) {
+
+                        // call the function for total floor computation
+                        console.log(selectedUnitType)
+
+                        // Incudes total units and apartment gfa per floor
+
+                        updateFloorPlate(cells);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+
+        // Updating the local storage
+        var stored_table_data = JSON.parse(localStorage.getItem('tableData')) || [];
+
+        console.log("this is the table data first")
+
+        console.log(stored_table_data)
+
+
+
+        var found = false;
+
+        // Iterating through stored_table_data to check if dataDict already exists
+        for (var i = 0; i < stored_table_data.length; i++) {
+            var rowData = stored_table_data[i];
+            if (rowData[0] === dataDict['Floor selected']) {
+                var columnIndex = getCellIndexForUnitType(dataDict['Unit Type selected']);
+                if (columnIndex !== -1) {
+                    console.log("This condition is true under data dict already exists")
+                    // Updating the existing row with the new data
+                    rowData[columnIndex] = `Units Entered: ${dataDict['Units Entered']}, Area range: ${dataDict['Area range']}`;
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        // If the data doesn't exist, adding a new row
+        if (!found) {
+            stored_table_data.push([
+                dataDict['Floor selected'],
+                dataDict['Unit Type selected'],
+                `Units Entered: ${dataDict['Units Entered']}, Area range: ${dataDict['Area range']}`
+            ]);
+        }
+
+        localStorage.setItem('tableData', JSON.stringify(stored_table_data));
+
+        // update table 
+        // localStorage.setItem('storedUpdateTableHTML', JSON.stringify(stored_table_data.innerHTML));
+
+        updateExcelTable();
+
+        var nextIndex = unitTypeSelect.selectedIndex + 1;
+        if (nextIndex < unitTypeSelect.options.length) {
+            unitTypeSelect.selectedIndex = nextIndex;
+            updateUnitsModalHeading();
+            openUnitsModal();
+        } else {
+            // closeUnitsModal();
+        }
+    }
+
+
+// CHECK IF THE UNITS SELECTED IS OFFICE OR RETAIL 
+
+function isOfficeAndRetailSelected(selectedUnitType, areaRange) {
+    // Check if 'office' and 'retail' are selected with area range provided
+    
+    return (selectedUnitType.toLowerCase() === 'office' || selectedUnitType.toLowerCase() === 'retail') && areaRange.trim() !== '';
+}
+
+// CHECK IF THE UNITS SELECTED IS ALL APARTMENT TYPES
+
+function isApartmentTypesSelected(selectedUnitType, areaRange) {
+    // Check if 'office' and 'retail' are selected with area range provided
+    console.log('This is the selected apartment type inside here',selectedUnitType)
+    
+    return (selectedUnitType.toLowerCase() === '1 br' || selectedUnitType.toLowerCase() === '2 br' || selectedUnitType.toLowerCase() === '3 br' || selectedUnitType.toLowerCase() === 'studio') && areaRange.trim() !== '';
+}
+
+
+function updateTotalSellableGFA(cells) {
+    // Assuming that the indices for 'office' and 'retail' are 1 and 2 respectively
+    var officeAreaRange = parseInt(cells[1].innerText.split(":")[1]) || 0;
+    var retailAreaRange = parseInt(cells[2].innerText.split(":")[1]) || 0;
+
+    var totalSellableGFA = officeAreaRange + retailAreaRange;
+
+    // Assuming that the index for 'Total Sellable GFA' is 12
+    cells[26].innerText = `Total Sellable GFA: ${totalSellableGFA}`;
+    console.log('This is total sellable gfa',totalSellableGFA)
+    highlightCell(cells[26])
+}
+
+// function computation for calculating the total units in a floor
+
+function updateFloorPlate(cells) {
+
+    // Assuming that the indices for 'office' and 'retail' are 1 and 2 respectively
+    var br1_unit = parseInt(cells[9].innerText) || 0;
+    var br2_unit = parseInt(cells[10].innerText) || 0;
+    var br3_unit = parseInt(cells[11].innerText) || 0;
+    var studio_unit = parseInt(cells[12].innerText) || 0;
+
+    var br1_area = parseInt(cells[9].innerText) || 0;
+
+    var br2_area = parseInt(cells[9].innerText) || 0;
+
+    var br3_area = parseInt(cells[9].innerText) || 0;
+
+    var studio_area = parseInt(cells[9].innerText) || 0;
+
+
+    var total_units = br1_unit + br2_unit + br3_unit + studio_unit;
+
+
+    var apartment_gfa = br1_unit * br1_area + br2_unit * br2_area + br3_unit * br3_area + studio_unit * studio_area
+
+
+    // Assuming that the index for 'Total Sellable GFA' is 13
+
+    cells[13].innerText = `${total_units}`;
+
+    cells[14].innerText = `${apartment_gfa}`;
+
+
+
+    get_total_gfa()
+
+
+    console.log('This is total units per floor',total_units)
+
+    highlightCell(cells[13])
+    highlightCell(cells[14])
+}
+
+
+
+
+
+
+
+function getCellIndexForUnitTypeDynamic(unitType) {
+    var tableHeaders = document.getElementById('excelTable').getElementsByTagName('th');
+
+    for (var i = 0; i < tableHeaders.length; i++) {
+        if (tableHeaders[i].innerText.includes(unitType)) {
+            return i;
+        }
+    }
+
+    return -1; // returning -1 if not found
+}
+
+
+function getCellIndexForUnitType(unitType) {
+    switch (unitType.toLowerCase()) {
+        case '1 br':
+            return [4,9];
+        case '2 br':
+            return [5,10];
+        case '3 br':
+            return [6,11];
+        case 'studio':
+            return [3,12];  // Adjusted index for 'studio'
+        case 'retail':
+            return 2;  // Adjusted index for 'retail'
+        case 'office':
+            return 1;  // Adjusted index for 'office'
+        default:
+            return -1;
+    }
+}
+
+function getCellIndexForAreaSpacesType(areaSpacesType) {
+    switch (areaSpacesType) {
+        case 'Office_area':
+            return 7; 
+        case 'Retail_area':
+            return 8; 
+        case 'Studio_area':
+            return 9; 
+        case '1BR_area':
+            return 10; 
+        case '2BR_area':
+            return 11; 
+        case '3BR_area':
+            return 12; 
+        case 'Lift Shaft':
+            return 17
+        case 'Corridors':
+            return 18; 
+
+        default:
+            return -1;
+    }
+}
+
+
+function highlightCell(cell) {
+   
+    cell.classList.add("highlight-cell");
+
+    
+    // setTimeout(function () {
+    //     cell.classList.remove("highlight-cell");
+    // }, 2000);
+}
+function updateExcelTable() {
+    // Assuming your table has an id 'excelTable'
+    var excelTable = document.getElementById('excelTable');
+    console.log('This is exceltable inside the update excel view function', excelTable);
+
+    // Create an array to store the headers
+    var headers = [];
+    // Iterate through the header row and push each header to the array
+    for (var i = 0; i < excelTable.rows[0].cells.length; i++) {
+        headers.push(excelTable.rows[0].cells[i].innerText);
+    }
+
+    // Create an array to store the rows
+    var rows = [];
+    // Iterate through the rows starting from index 1 (skipping the header row)
+    for (var i = 1; i < excelTable.rows.length; i++) {
+        var row = [];
+        // Iterate through the cells in each row and push the cell value to the row array
+        for (var j = 0; j < excelTable.rows[i].cells.length; j++) {
+            row.push(excelTable.rows[i].cells[j].innerText);
+        }
+        rows.push(row);
+    }
+
+    // Combining the headers and rows into a single array for full view
+    var excelTableData = [headers].concat(rows);
+
+    // // Save the data to local storage
+    // localStorage.setItem('excelTableData', JSON.stringify(excelTableData));
+
+   
+    // console.log('This is excel table data saved in local storage', excelTableData);
+
+    
+}
+
+
+// function getCellIndexForUnitType(unitType) {
+    
+//     switch (unitType) {
+//         case '1 BR':
+//             return 4;
+//         case '2 BR':
+//             return 5;
+//         case '3 BR':
+//             return 6;
+        
+//         default:
+//             return -1;
+//     }
+// }
+
+function saveFloorDataToLocalStorage() {
+    var tableBody = document.getElementById('tableBody');
+    var floorData = [];
+    console.log('This is table body inside the local storage function',tableBody)
+    // Iterating through table rows and extract floor data
+    for (var i = 0; i < tableBody.rows.length; i++) {
+        var floorRow = tableBody.rows[i];
+        var floorDetails = {
+            floor: floorRow.cells[0].innerText,
+        };
+        floorData.push(floorDetails);
+    }
+
+    // Converting floorData to JSON and save it
+    localStorage.setItem('floorData', JSON.stringify(floorData));
+}
+
+function loadDataFromLocalStorage() {
+    var storedFloorData = localStorage.getItem('floorData');
+    var storedTableHtml = localStorage.getItem('tableHtml');
+    console.log('This is under load data from local storage function',storedFloorData,storedTableHtml)
+    if (storedFloorData && storedTableHtml) {
+        floorData = JSON.parse(storedFloorData);
+
+        var tableContainer = document.getElementById('tableContainer');
+        tableContainer.innerHTML = storedTableHtml;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadFloorDataFromLocalStorage();
+});
+function handleFloorChange() {
+    var unitTypeSelect = document.getElementById("unitType");
+    unitTypeSelect.selectedIndex = 0; 
+}
+
+var floorList = document.getElementById('floor_list');
+floorList.addEventListener('change', function() {
+    handleFloorChange();
+    handleAreaSpacesChange();
+});
+
+function updateTableRowsBasedOnFloorData() {
+    var tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = ""; 
+   
+    floorData.forEach((floor, index) => {
+        var row = tableBody.insertRow();
+        var cellSrNo = row.insertCell(0);
+        var cellOfficeArea = row.insertCell(1);
+        var cellRetailArea = row.insertCell(2);
+        var cellStudioArea = row.insertCell(3);
+        var cell1BR = row.insertCell(4);
+        var cell2BR = row.insertCell(5);
+        var cell3BR = row.insertCell(6);
+
+        cellSrNo.innerHTML = `Floor ${index + 1}`;
+        cellOfficeArea.innerHTML = floor.office_area;
+        cellRetailArea.innerHTML = floor.retail_area;
+        cellStudioArea.innerHTML = floor.studio_area;
+        cell1BR.innerHTML = floor.aBR_area;
+        cell2BR.innerHTML = floor.bBR_area;
+        cell3BR.innerHTML = floor.cBR_area;
+    });
+    console.log('This is table body after the insertion in update table rows',tableBody)
+    console.log('This is celloffice area',cellOfficeArea,cellRetailArea,cell1BR,cell2BR,cell3BR)
+}
+updateTableRowsBasedOnFloorData();
+
+function goToPreviousStep() {
+    console.log('This is previous step in units modal', currentStep);
+    currentStep--;
+    console.log('The previous button has clicked and current step is decreased', currentStep);
+
+    var unitsModal = document.getElementById('unitsModal');
+    unitsModal.style.display = 'none';
+
+    // var previousModal = document.getElementById('myModal'); // Assuming 'myModal' is your main modal ID
+    // previousModal.style.display = 'flex';
+
+    console.log("this is the previous step to the main modal and the corresponding excel table below")
+    console.log(excelTable)
+
+    localStorage.setItem('storedUpdateTableHTML',excelTable.innerHTML)
+
+    // TAKES YOU TO THE MAIN MODAL
+    nextStep()
+}
+
+document.getElementById('downloadExcelBtn').addEventListener('click', function () {
+    downloadExcel();
+});
+
+//This donwloaded Excel  Can have issues with the compatability on Excel Version opening the file using Online Excel Editor would solve the problem eg.aspose products can be used 
+function downloadExcel() {
+  
+    var table = document.getElementById("excelTable");
+    var tableHTML = table.outerHTML;
+
+    
+    var blob = new Blob([tableHTML], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+   
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'table_data.xlsx';
+
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+
+function goToPreviousStep2() {
+    console.log('This previous step 2 is executed successfully!')
+    console.log('Total floors in previous step',totalFloors)
+    currentStep--;
+    console.log('Current step is decreased',currentStep)
+    document.getElementById('nextModal').style.display = 'none';
+
+    if (currentStep === 1) {
+       
+        openModal();
+    } else {
+        document.getElementById('nextModal').style.display = 'flex';
+    }
+}
+
+function goToPreviousStep3() {
+    console.log('This previous step 3 is executed successfully');
+    currentStep--;
+    console.log('Current step is decreased', currentStep);
+    document.getElementById('areaSpacesModal').style.display = 'none';
+    
+    // Update the table only if not navigating back to step 1
+    if (currentStep > 1) {
+        console.log('This is current step',currentStep)
+        updateExcelTable();
+    }
+
+    // Go back to the previous step
+    nextStep();
+    console.log('Back to next step modal hurray!');
+}
+
+function goTypicalToMainModal(){
+
+    console.log('This mainModal step is executed succesfully');
+    console.log('This previous step 3 is executed succesfully');
+    totalFloors = excelTable.rows.length - 2
+    console.log('This is excel table in main modal',excelTable)
+    console.log('This is total floors in previos',totalFloors)
+
+    currentStep--;
+
+    console.log('Current step is descreased',currentStep)
+    document.getElementById('typicalModal').style.display = 'none';
+    nextStep();
+    console.log('Back to next Main modal hurray!')
+
+
+}
+
+
+// updateTableRows(2); 
+
+    </script>
+</body>
+
+</html>
