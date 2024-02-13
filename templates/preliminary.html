@@ -1481,18 +1481,7 @@ function saveTableData() {
             document.getElementById('areaSpacesModal').style.display = 'none';
         }
 
-        // function updateAreaspacesModalHeading() {
-        //     var areaspaces_type = document.getElementById("areaspaces_type");
-        //     var selectedareaspaces = areaspaces_type.options[areaspaces_type.selectedIndex].text;
-        //     var areaspaces_type2 = document.getElementById("unit_type_ns_nn_gfa");
-        //     var selectedareaspaces2 = areaspaces_type2.options[areaspaces_type2.selectedIndex].text;
-        //     console.log('This is selected area spaces type',selectedareaspaces)
-        //     document.getElementById("select_areaspaces_ns_gfa").innerText = `Select the unit type for Non Sellable GFA units for ${selectedareaspaces}`;
-        //     document.getElementById("areaSpacesModal-heading").innerText = `Enter the area for space for Non Sellable GFA units for ${selectedareaspaces}`;
-        //     document.getElementById("areaspaces_ns_gfa").innerText = `Enter the Number of Units for ${selectedareaspaces}:`;
-        //     document.getElementById("areaspaces_ns_nn_gfa").innerText = `Select the unit type  for Non Sellable Non GFA units for ${selectedareaspaces2}:`;
-        //     document.getElementById("area_of_spaces_ns_gfa1").innerText = `Enter the area for space for Non Sellable Non GFA units for ${selectedareaspaces2}:`;
-        // }
+    
         
         
         var total_sellable_list = [];
@@ -1609,40 +1598,6 @@ function saveTableData() {
             console.log(tableBody)
 
 
-
-
-            // Updating the local storage
-            // var stored_table_data = JSON.parse(localStorage.getItem('tableData')) || [];
-
-            // console.log(stored_table_data)
-            // var found = false;
-
-            // for (var i = 0; i < stored_table_data.length; i++) {
-            //     var rowData = stored_table_data[i];
-            //     console.log("row data",rowData)
-            //     if (rowData[0] === dataDict['Floor selected']) {
-            //         var columnIndex = getCellIndexForAreaSpacesTypeDynamic(cells, dataDict['Area Spaces selected']);
-            //         if (columnIndex !== -1) {
-            //             rowData[columnIndex] = `${dataDict['Area Spaces selected']}: ${dataDict['Area Spaces Entered']}`;
-            //             found = true;
-            //             break;
-            //         }
-            //     }
-            // }
-
-            // console.log("check 2")
-
-            // if (!found) {
-            //     stored_table_data.push([
-            //         dataDict['Floor selected'],
-            //         dataDict['Area Spaces selected'],
-            //         `${dataDict['Area Spaces selected']}: ${dataDict['Area Spaces Entered']}`
-            //     ]);
-            // }
-
-            // stored_table_data = localStorage.setItem('tableData', JSON.stringify(stored_table_data));
-            // console.log('This is stored table data',stored_table_data)
-            // updateExcelTable();
         }
     }
 
@@ -1656,12 +1611,58 @@ function saveTableData() {
         submitData(areaSpacesDropdown, areaspacesdropdowntext, 1);
 
     }
+
     // Submit data for the second dropdown
     var areaspacesdropdowntext2 = document.getElementById("area_of_spaces_ns_gfa2").value;
 
-    console.log("the texts")
+    //  WRITING THE FUNCTION FOR NON SELLABLE NON GFA
+    function calculateNonSellableNonGFA(){
 
-    console.log(areaspacesdropdowntext2)
+        // var g = document.getElementsByClassName('excelTable');
+
+        var tableHeaders = document.getElementById('excelTable').getElementsByTagName('th');
+
+        var tablerows = document.getElementById('excelTable').getElementsByTagName('td');
+
+        for (var j =0; j<tablerows.length; j++){
+
+            var sum = 0;
+
+            for  (var i=0; i<tableHeaders.length; i++ ){
+
+                
+                if (tableHeaders[i].textContent == 'Mep service' || tableHeaders[i].textContent == 'Gym' || tableHeaders[i].textContent == 'Ramps/Driveway') { 
+
+                    sum += parseInt(tablerows[i].textContent) || 0;
+
+                }
+
+                if (tableHeaders[i].textContent == 'Total Non Sellable Non GFA'){
+
+                    console.log('gotcha')
+
+                    tablerows[i].innerText = sum;
+
+                    highlightCell(tablerows[i])
+
+                }
+
+            }
+        
+        }
+
+        console.log(excelTable)
+    
+    }    
+    
+                
+
+            // if (tableHeaders[i].textContent == 'Mep service' || tableHeaders[i].textContent == 'Gym' || tableHeaders[i].textContent == 'Ramps/Driveway') { 
+            
+  
+
+
+    
 
     // CALLING SUBMIT DATA FOR THE SECOND  DROPDOWN
 
@@ -1671,80 +1672,10 @@ function saveTableData() {
 
         submitData(areaSpacesDropdown2, areaspacesdropdowntext2, 2);
 
+        calculateNonSellableNonGFA()
+
+
     }
-
-    // Additional condition: If both dropdowns are selected and both textboxes are filled, show both in the Excel table
-    // if (areaspacesdropdowntext.trim() !== "" && areaspacesdropdowntext2.trim() !== "") {
-
-    //     var selectedFloor = floorListDropdown.options[floorListDropdown.selectedIndex].text;
-    //     var tableBody = document.getElementById('tableBody');
-    //     var rows = tableBody.getElementsByTagName('tr');
-
-        // for (var i = 0; i < rows.length; i++) {
-        //     var cells = rows[i].getElementsByTagName('td');
-
-        //     if (cells.length > 0 && cells[0].innerText === selectedFloor) {
-        //         var columnIndex1 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown.value);
-        //         var columnIndex2 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown2.value);
-
-        //         if (columnIndex1 !== -1 && columnIndex2 !== -1) {
-        //             var updatedCell1 = cells[columnIndex1];
-        //             var updatedCell2 = cells[columnIndex2];
-
-        //             updatedCell1.innerText = `Area spaces selected : ${areaSpacesDropdown.value}: Area spaces Entered : ${areaspacesdropdowntext}`;
-        //             updatedCell2.innerText = `Area spaces selected : ${areaSpacesDropdown2.value}: Area spaces Entered : ${areaspacesdropdowntext2}`;
-
-        //             highlightCell(updatedCell1);
-        //             highlightCell(updatedCell2);
-
-        //             break;
-        //         }
-        //     }
-        // }
-
-        // var stored_table_data = JSON.parse(localStorage.getItem('tableData')) || [];
-        // var found = false;
-
-        // for (var i = 0; i < stored_table_data.length; i++) {
-        //     var rowData = stored_table_data[i];
-        //     if (rowData[0] === floorListDropdown.value) {
-        //         var columnIndex1 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown.value);
-        //         var columnIndex2 = getCellIndexForAreaSpacesTypeDynamic(cells, areaSpacesDropdown2.value);
-
-        //         if (columnIndex1 !== -1 && columnIndex2 !== -1) {
-        //             rowData[columnIndex1] = `${areaSpacesDropdown.value}: ${areaspacesdropdowntext}`;
-        //             rowData[columnIndex2] = `${areaSpacesDropdown2.value}: ${areaspacesdropdowntext2}`;
-        //             found = true;
-        //             break;
-        //         }
-        //     }
-        // }
-
-        // if (!found) {
-        //     stored_table_data.push([
-        //         floorListDropdown.value,
-        //         areaSpacesDropdown.value,
-        //         `${areaSpacesDropdown.value}: ${areaspacesdropdowntext}`
-        //     ]);
-
-        //     stored_table_data.push([
-        //         floorListDropdown.value,
-        //         areaSpacesDropdown2.value,
-        //         `${areaSpacesDropdown2.value}: ${areaspacesdropdowntext2}`
-        //     ]);
-        // }
-
-        // // this is the final data available
-
-        // console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
-
-    
-        // updateExcelTable();
-
-        // STORING THE DATA INTO LOCAL STORAGE
-
-        
-    // }
 
     localStorage.setItem('storedUpdateTableHTML',excelTable.innerHTML)
 }
